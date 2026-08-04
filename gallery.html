@@ -29,6 +29,11 @@
     .video-wrap {
       border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
       background: #000; aspect-ratio: 16/9; position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .video-wrap:hover {
+      transform: scale(1.02);
+      box-shadow: 0 28px 60px rgba(0,0,0,0.35);
     }
     .video-wrap iframe { width: 100%; height: 100%; border: 0; }
     .video-label { padding: 16px 20px; background: var(--card); border: 1px solid var(--glass-border); border-top: none; border-radius: 0 0 var(--radius) var(--radius); }
@@ -46,82 +51,10 @@
     .modal-next { right: 16px; }
     .modal-prev:hover, .modal-next:hover { background: rgba(255,255,255,0.3); }
     .modal-counter { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.75); font-size: 0.88rem; background: rgba(0,0,0,0.5); padding: 4px 14px; border-radius: 99px; }
-.featured-video{
-    padding:80px 0;
-}
-    
-/* ── video container: rounded corners + size ── */
-.video-wrapper {
-    width: 100%;                 /* fills its parent */
-    border-radius: 24px;         /* the rounded corners you see */
-    overflow: hidden;            /* keeps corners round on the iframe */
-    box-shadow: 0 20px 50px rgba(0,0,0,.25); /* optional shadow, remove if unwanted */
-}
-
-.video-wrapper iframe {
-    width: 100%;
-    aspect-ratio: 16 / 9;        /* sets the height relative to width */
-    border: none;
-    display: block;
-}
-    /* ── Video grid layout ── */
-.video-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    padding: 40px 0;
-}
-
-/* ── Video wrap: corners + size + shadow ── */
-.video-wrap {
-    width: 100%;
-    border-radius: 24px;          /* rounded corners like before */
-    overflow: hidden;             /* keeps iframe corners round */
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.20);
-    background: #000;             /* fallback while video loads */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.video-wrap:hover {
-    transform: scale(1.01);
-    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.30);
-}
-
-.video-wrap iframe {
-    width: 100%;
-    aspect-ratio: 16 / 9;         /* keeps the video 16:9 */
-    border: none;
-    display: block;
-}
-
-/* ── Label below each video ── */
-.video-label {
-    margin-top: 16px;
-    padding: 0 4px;
-}
-
-.video-label h4 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #0b1a2e;
-    margin-bottom: 4px;
-}
-
-.video-label p {
-    font-size: 15px;
-    color: #4a5a72;
-    line-height: 1.5;
-    margin: 0;
-}
-
-/* ── Responsive: stack on mobile ── */
-@media (max-width: 768px) {
-    .video-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
+    /* responsive fix for video grid */
+    @media (max-width: 600px) {
+      .video-grid { grid-template-columns: 1fr; }
     }
-}
-
   </style>
 </head>
 <body>
@@ -297,29 +230,31 @@
         <p class="section-subtitle">Watch our travel videos and get inspired for your next adventure with Aurora Travels</p>
       </div>
 
-      <!-- HTML5 Video -->
-      <section class="featured-video">
-    <div class="container">
-        <div class="section-header">
-            <div class="section-tag">🎥 Featured Travel Video</div>
-            <h2 class="section-title">Experience <span>Our Journey</span></h2>
-            <p>Watch our complete travel showcase and discover amazing destinations around the world.</p>
-        </div>
+      <!-- HTML5 Video (keep as is, but add fallback) -->
+      <div style="margin-bottom:32px">
+        <h3 style="margin-bottom:14px;font-size:1.1rem">Aurora Travels — Official Destination Video</h3>
+        <video controls style="width:100%;max-width:800px;border-radius:var(--radius);box-shadow:var(--shadow);display:block;margin:0 auto"
+          poster="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80">
+          <source src="Aurora.mp4" type="video/mp4" />
+          <p>Your browser does not support the video element. <a href="Aurora.mp4">Download the video</a>.</p>
+        </video>
+        <p style="text-align:center;color:var(--text-light);font-size:0.82rem;margin-top:10px">
+          <em>Aurora Travels — "Begin Your Journey"</em> &nbsp;|&nbsp;
+          <sup>HD</sup> 2026 Official Reel
+        </p>
+      </div>
 
-        <div class="video-wrapper">
-            <iframe
-                src="https://www.youtube.com/embed/QGmZ1rsKJ9c"
-                title="Aurora Travels Showcase"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-            </iframe>
-        </div>
-    </div>
-      </section>
+      <!-- YouTube Video Grid (FIXED) -->
       <div class="video-grid">
         <div>
           <div class="video-wrap">
-            <iframe src="https://www.youtube.com/embed/Ppv-H-_xa9E" title="Japan Travel Video" allowfullscreen loading="lazy"></iframe>
+            <iframe 
+              src="https://www.youtube.com/embed/jTOfOew316s" 
+              title="Japan Travel Video" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen 
+              loading="lazy">
+            </iframe>
           </div>
           <div class="video-label">
             <h4>🇯🇵 Japan — Land of the Rising Sun</h4>
@@ -328,7 +263,13 @@
         </div>
         <div>
           <div class="video-wrap">
-            <iframe src="https://www.youtube.com/embed/jTOfOew316s" title="Maldives Travel Video" allowfullscreen loading="lazy"></iframe>
+            <iframe 
+              src="https://www.youtube.com/embed/Ppv-H-_xa9E" 
+              title="Maldives Travel Video" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen 
+              loading="lazy">
+            </iframe>
           </div>
           <div class="video-label">
             <h4>🇲🇻 Maldives — Crystal Waters Paradise</h4>
