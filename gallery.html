@@ -64,6 +64,63 @@
     border: none;
     display: block;
 }
+    /* ── Video grid layout ── */
+.video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 40px 0;
+}
+
+/* ── Video wrap: corners + size + shadow ── */
+.video-wrap {
+    width: 100%;
+    border-radius: 24px;          /* rounded corners like before */
+    overflow: hidden;             /* keeps iframe corners round */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.20);
+    background: #000;             /* fallback while video loads */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-wrap:hover {
+    transform: scale(1.01);
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.30);
+}
+
+.video-wrap iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;         /* keeps the video 16:9 */
+    border: none;
+    display: block;
+}
+
+/* ── Label below each video ── */
+.video-label {
+    margin-top: 16px;
+    padding: 0 4px;
+}
+
+.video-label h4 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0b1a2e;
+    margin-bottom: 4px;
+}
+
+.video-label p {
+    font-size: 15px;
+    color: #4a5a72;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ── Responsive: stack on mobile ── */
+@media (max-width: 768px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
 
   </style>
 </head>
@@ -262,7 +319,7 @@
       <div class="video-grid">
         <div>
           <div class="video-wrap">
-            <iframe src="Japan.mp4" title="Japan Travel Video" allowfullscreen loading="lazy"></iframe>
+            <iframe src="https://www.youtube.com/embed/Ppv-H-_xa9E" title="Japan Travel Video" allowfullscreen loading="lazy"></iframe>
           </div>
           <div class="video-label">
             <h4>🇯🇵 Japan — Land of the Rising Sun</h4>
@@ -271,7 +328,7 @@
         </div>
         <div>
           <div class="video-wrap">
-            <iframe src="Maldives.mp4" title="Maldives Travel Video" allowfullscreen loading="lazy"></iframe>
+            <iframe src="https://www.youtube.com/embed/jTOfOew316s" title="Maldives Travel Video" allowfullscreen loading="lazy"></iframe>
           </div>
           <div class="video-label">
             <h4>🇲🇻 Maldives — Crystal Waters Paradise</h4>
