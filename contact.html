@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — Aurora Travels</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Internal CSS — Contact Page */
+    .contact-hero {
+      background: linear-gradient(135deg, #1E40AF 0%, #0EA5E9 55%, #06B6D4 100%);
+      padding: 80px 0 64px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-form-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 36px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--glass-border);
+    }
+    .office-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--glass-border);
+      transition: all 0.35s;
+    }
+    .office-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .office-city {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .office-card h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .office-detail {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      font-size: 0.88rem;
+      color: var(--text-light);
+    }
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      border: 1px solid var(--glass-border);
+      transition: all 0.3s;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .social-link:hover {
+      transform: translateX(6px);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .social-link-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .faq-intro {
+      max-width: 620px;
+    }
+    #contact-success {
+      display: none;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 36px;
+      text-align: center;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      box-shadow: var(--shadow-lg);
+    }
+    #contact-success.show {
+      display: block;
+    }
+    #contact-success .icon {
+      font-size: 4rem;
+      margin-bottom: 16px;
+    }
+    #contact-success h3 {
+      color: #059669;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading-screen">
+    <div class="loader-logo">✈ Aurora Travels</div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <p class="loader-text">Loading contact page…</p>
+  </div>
+  <button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">✈ Aurora Travels</a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="packages.html">Packages</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="booking.html">Book Now</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-theme" id="themeToggle">🌙</button>
+        <a href="booking.html" class="btn-nav-cta">Book Now</a>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="contact-hero">
+    <div class="container" style="position:relative;z-index:2">
+      <div class="breadcrumb" style="color:rgba(255,255,255,0.7)">
+        <a href="index.html" style="color:rgba(255,255,255,0.9)">Home</a>
+        <span>/</span><span style="color:#fff">Contact</span>
+      </div>
+      <h1 style="font-size:clamp(2.2rem,5vw,3.2rem);font-weight:900;margin:14px 0 12px">
+        Get in <span style="color:#67E8F9">Touch</span>
+      </h1>
+      <p style="opacity:0.85;max-width:560px;font-size:1.05rem">
+        Whether you're planning your first trip or your fiftieth, our dedicated team is here to make
+        your travel dreams come true. Reach out — we'd love to hear from you.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Contact Grid -->
+      <div class="contact-grid">
+
+        <!-- Contact Form -->
+        <div>
+          <h2 class="section-title" style="font-size:1.8rem;margin-bottom:24px">Send Us a <span>Message</span></h2>
+
+          <!-- Success Message -->
+          <div id="contact-success">
+            <div class="icon">✉</div>
+            <h3>Message Sent Successfully!</h3>
+            <p style="color:var(--text-light);margin-bottom:24px">
+              Thank you for reaching out to <strong>Aurora Travels</strong>. One of our travel consultants
+              will respond to your message within <strong>2 business hours</strong>. We look forward to
+              helping you plan your next extraordinary journey.
+            </p>
+            <button class="btn btn-primary" onclick="resetContactForm()">Send Another Message</button>
+          </div>
+
+          <div class="contact-form-card fade-in" id="contactFormCard">
+            <form id="contactForm" onsubmit="submitContact(event)">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="cName">Full Name *</label>
+                  <input type="text" class="form-control" id="cName" placeholder="Maria Clara Santos" />
+                  <span class="form-error" id="err-cName">Please enter your name.</span>
+                </div>
+                <div class="form-group">
+                  <label for="cEmail">Email Address *</label>
+                  <input type="email" class="form-control" id="cEmail" placeholder="you@example.com" />
+                  <span class="form-error" id="err-cEmail">Please enter a valid email.</span>
+                </div>
+                <div class="form-group">
+                  <label for="cPhone">Phone Number</label>
+                  <input type="tel" class="form-control" id="cPhone" placeholder="+63 9XX XXX XXXX" />
+                </div>
+                <div class="form-group">
+                  <label for="cSubject">Subject *</label>
+                  <select class="form-control" id="cSubject">
+                    <option value="">— Select Subject —</option>
+                    <option>Trip Inquiry</option>
+                    <option>Booking Assistance</option>
+                    <option>Package Information</option>
+                    <option>Cancellation / Refund</option>
+                    <option>General Question</option>
+                    <option>Partnership Inquiry</option>
+                  </select>
+                  <span class="form-error" id="err-cSubject">Please select a subject.</span>
+                </div>
+                <div class="form-group full">
+                  <label for="cMessage">Your Message *</label>
+                  <textarea class="form-control" id="cMessage" placeholder="Tell us how we can help you plan your dream trip…" style="min-height:140px"></textarea>
+                  <span class="form-error" id="err-cMessage">Please enter your message.</span>
+                </div>
+              </div>
+              <!-- Inline CSS example in contact page -->
+              <p style="font-size:0.82rem;color:var(--text-light);margin:16px 0 20px;padding:12px 16px;background:rgba(37,99,235,0.05);border-radius:var(--radius-sm);border-left:3px solid var(--primary)">
+                🔒 Your information is completely <strong>confidential</strong> and will <em>never</em> be shared with third parties.
+                Expected response time: <mark>within 2 business hours</mark> during office hours (Mon–Sat, 8AM–8PM PHT).
+              </p>
+              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px">
+                📨 Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div>
+          <h2 class="section-title" style="font-size:1.8rem;margin-bottom:24px">Contact <span>Information</span></h2>
+
+          <div class="contact-info-card fade-in" style="margin-bottom:24px">
+            <h3 style="font-size:1rem;font-weight:800;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--glass-border)">📍 Main Office — Makati City</h3>
+
+            <div class="contact-item">
+              <div class="contact-icon">📍</div>
+              <div>
+                <h4>Address</h4>
+                <p>Aurora Travels Building, 24/F Tower One,<br/>Ayala Avenue, Makati City, Metro Manila,<br/>Philippines 1226</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">📞</div>
+              <div>
+                <h4>Phone</h4>
+                <p><a href="tel:+6328001234" style="color:var(--primary)">+63 2 800 1234</a> (Main Line)<br/>
+                <a href="tel:+639171234567" style="color:var(--primary)">+63 917 123 4567</a> (WhatsApp / Viber)</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">✉</div>
+              <div>
+                <h4>Email</h4>
+                <p><a href="mailto:auroratravels@gmail.com" style="color:var(--primary)">info@auroratravels.ph</a><br/>
+                <a href="mailto:bookingsaurora@gmail.com" style="color:var(--primary)">bookings@auroratravels.ph</a></p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">🕐</div>
+              <div>
+                <h4>Office Hours</h4>
+                <p>Monday – Friday: <strong>8:00 AM – 8:00 PM</strong><br/>
+                Saturday: <strong>9:00 AM – 6:00 PM</strong><br/>
+                Sunday &amp; Holidays: <strong>Emergency only</strong></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Media Links -->
+          <div class="contact-info-card fade-in" style="margin-bottom:24px">
+            <h3 style="font-size:1rem;font-weight:800;margin-bottom:16px">🌐 Follow Us on Social Media</h3>
+            <p style="color:var(--text-light);font-size:0.88rem;margin-bottom:16px">
+              Stay connected for travel inspiration, exclusive deals, and behind-the-scenes content:
+            </p>
+            <div class="social-links">
+              <a href="https://www.facebook.com" target="_blank" class="social-link">
+                <div class="social-link-icon" style="background:#1877F2">f</div>
+                <span>Facebook — <strong>Aurora Travels PH</strong></span>
+              </a>
+              <a href="https://www.instagram.com" target="_blank" class="social-link">
+                <div class="social-link-icon" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">ig</div>
+                <span>Instagram — <strong>@auroratravels</strong></span>
+              </a>
+              <a href="https://www.twitter.com" target="_blank" class="social-link">
+                <div class="social-link-icon" style="background:#000">𝕏</div>
+                <span>Twitter / X — <strong>@AuroraTravelsPH</strong></span>
+              </a>
+              <a href="https://www.youtube.com" target="_blank" class="social-link">
+                <div class="social-link-icon" style="background:#FF0000">▶</div>
+                <span>YouTube — <strong>Aurora Travels Channel</strong></span>
+              </a>
+            </div>
+          </div>
+
+          <!-- DOT Reference -->
+          <div style="background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(6,182,212,0.06));border:1px solid rgba(37,99,235,0.15);border-radius:var(--radius-sm);padding:18px 20px;font-size:0.85rem;color:var(--text-light)">
+            <strong style="color:var(--text)">🛡 Licensed &amp; Accredited</strong><br/>
+            DOT Accreditation No. <mark>PH-2026-AT-0042</mark><br/>
+            IATA Accreditation No. <em>63-8-1947</em><br/>
+            <u>Philippine SEC Registration</u>: CN2012-08-0042<sup>*</sup>
+          </div>
+        </div>
+      </div>
+
+      <!-- Regional Offices -->
+      <div style="margin-top:72px" class="fade-in">
+        <div class="section-header">
+          <div class="section-tag">📍 Branch Offices</div>
+          <h2 class="section-title">Our <span>Offices Nationwide</span></h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px">
+          <div class="office-card">
+            <div class="office-city">Metro Manila • HQ</div>
+            <h4>Makati Main Office</h4>
+            <div class="office-detail">📍 <span>24/F Tower One, Ayala Ave., Makati 1226</span></div>
+            <div class="office-detail">📞 <span><a href="tel:+6328001234" style="color:var(--primary)">+63 2 800 1234</a></span></div>
+            <div class="office-detail">🕐 <span>Mon–Sat: 8AM–8PM</span></div>
+          </div>
+          <div class="office-card">
+            <div class="office-city">Visayas • Cebu</div>
+            <h4>Cebu City Branch</h4>
+            <div class="office-detail">📍 <span>12/F Ayala Center Cebu Tower, Cebu 6000</span></div>
+            <div class="office-detail">📞 <span><a href="tel:+63328001234" style="color:var(--primary)">+63 32 800 1234</a></span></div>
+            <div class="office-detail">🕐 <span>Mon–Sat: 9AM–7PM</span></div>
+          </div>
+          <div class="office-card">
+            <div class="office-city">Mindanao • Davao</div>
+            <h4>Davao City Branch</h4>
+            <div class="office-detail">📍 <span>5/F SM Lanang Premier, JP Laurel Ave., Davao 8000</span></div>
+            <div class="office-detail">📞 <span><a href="tel:+63828001234" style="color:var(--primary)">+63 82 800 1234</a></span></div>
+            <div class="office-detail">🕐 <span>Mon–Sat: 9AM–7PM</span></div>
+          </div>
+          <div class="office-card">
+            <div class="office-city">Luzon • Baguio</div>
+            <h4>Baguio City Branch</h4>
+            <div class="office-detail">📍 <span>Session Road Center, Session Road, Baguio 2600</span></div>
+            <div class="office-detail">📞 <span><a href="tel:+63748001234" style="color:var(--primary)">+63 74 800 1234</a></span></div>
+            <div class="office-detail">🕐 <span>Mon–Sat: 9AM–6PM</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map Section -->
+      <div style="margin-top:60px" class="fade-in">
+        <h3 style="margin-bottom:16px;font-size:1.1rem;font-weight:800">📍 Find Our Makati Main Office</h3>
+        <div class="map-section">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.6517278165684!2d121.01537431483837!3d14.55466998983215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c90264a81a41%3A0x2e0c1d9c760cb2c!2sAyala%20Ave%2C%20Makati%2C%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1680000000000"
+            title="Aurora Travels — Makati Office Location"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div style="margin-top:72px" class="fade-in">
+        <div class="section-header">
+          <div class="section-tag">❓ FAQs</div>
+          <h2 class="section-title">Frequently Asked <span>Questions</span></h2>
+          <p class="section-subtitle">Find quick answers to the most common questions about Aurora Travels</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start">
+          <div class="accordion fade-in" id="faqLeft">
+
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleFaq(this)">
+                <span>How do I make a booking with Aurora Travels?</span>
+                <span class="accordion-icon">+</span>
+              </div>
+              <div class="accordion-body">
+                <p>You can book through our <a href="booking.html" style="color:var(--primary)">online booking form</a>, call our hotline at +63 2 800 1234, or visit any of our branch offices. Our consultants will confirm your booking within 24 hours and guide you through every step of the process.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleFaq(this)">
+                <span>What is included in the travel packages?</span>
+                <span class="accordion-icon">+</span>
+              </div>
+              <div class="accordion-body">
+                <p>All Aurora Travels packages include <strong>return flights</strong>, hotel accommodation (minimum 4-star), airport transfers, local transportation, professional tour guides, travel insurance, and pre-booked attraction tickets. Specific inclusions vary per package — check each package's details for a full list.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleFaq(this)">
+                <span>Can I customize my itinerary?</span>
+                <span class="accordion-icon">+</span>
+              </div>
+              <div class="accordion-body">
+                <p>Absolutely! We specialize in fully <em>customized itineraries</em>. Tell us your dream destination, travel style, budget, and dates — our consultants will craft a personalized journey that perfectly matches your preferences. Custom packages are available for solo travelers, couples, families, and groups.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleFaq(this)">
+                <span>What payment methods do you accept?</span>
+                <span class="accordion-icon">+</span>
+              </div>
+              <div class="accordion-body">
+                <p>We accept all major credit and debit cards (Visa, Mastercard, AMEX), online bank transfers, GCash, PayMaya, and direct bank deposits. A <strong>25% non-refundable deposit</strong> is required to confirm the booking, with the full balance due 45 days before departure.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleFaq(this)">
+                <span>Do you provide visa assistance?</span>
+                <span class="accordion-icon">+</span>
+              </div>
+              <div class="accordion-body">
+                <p>Yes! <mark>Visa assistance is included</mark> in all our packages. Our visa specialists will guide you through the complete application process, prepare your documents, and provide official sponsorship letters where required. Processing fees (charged by the embassy) are the client's responsibility.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="accordion fade-in" id="faqRight">
+
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleFaq(this)">
+                <span>What is your cancellation policy?</span>
+                <span class="accordion-icon">+</span>
+              </div>
+              <div class="accordion-body">
+                <p>We offer <strong>free cancellation within 48 hours</strong> of booking. Cancellations 30–44 days before departure receive a 50% refund. Cancellations within 29 days of departure are non-refundable. We strongly recommend purchasing travel insurance (included in our packages) for full protection.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleFaq(this)">
+                <span>Is travel insurance included?</span>
+                <span class="accordion-icon">+</span>
+              </div>
+              <div class="accordion-body">
+                <p>Yes, <u>comprehensive travel insurance</u> is included in all Aurora Travels packages. Coverage includes medical emergencies (up to USD 100,000), trip cancellation, lost or delayed baggage, flight delays, and emergency evacuation. Additional top-up coverage is available on request.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleFaq(this)">
+                <span>Are group discounts available?</span>
+                <span class="accordion-icon">+</span>
+              </div>
+              <div class="accordion-body">
+                <p>Groups of <strong>5–9 guests</strong> receive a 10% discount on total package price. Groups of <strong>10 or more</strong> receive a 15% discount plus a complimentary group coordinator service throughout the trip. Contact our group travel team for customized group packages and pricing.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleFaq(this)">
+                <span>Do you organize corporate travel?</span>
+                <span class="accordion-icon">+</span>
+              </div>
+              <div class="accordion-body">
+                <p>Yes! Aurora Travels has a dedicated <em>Corporate Travel Division</em> handling incentive trips, team-building retreats, corporate events, and executive travel management. We work with over 150 corporate clients across the Philippines. Email <a href="mailto:corporate@auroratravels.ph" style="color:var(--primary)">corporate@auroratravels.ph</a> for details.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <div class="accordion-header" onclick="toggleFaq(this)">
+                <span>How do I reach you in an emergency during my trip?</span>
+                <span class="accordion-icon">+</span>
+              </div>
+              <div class="accordion-body">
+                <p>Our <strong>24/7 emergency travel support</strong> line is always available at <a href="tel:+639171234567" style="color:var(--primary)">+63 917 123 4567</a> (WhatsApp/Viber). Every client also receives a personal emergency contact card with their local destination representative's number before departure. We never leave you without support.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- External Link -->
+        <div style="text-align:center;margin-top:36px">
+          <p style="color:var(--text-light);font-size:0.9rem">Still have questions? Visit the official tourism information website:</p>
+          <a href="https://www.tourism.gov.ph" target="_blank" class="btn btn-outline" style="margin-top:12px">
+            🌐 Visit Philippine DOT Official Website
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Newsletter CTA -->
+  <section style="background:linear-gradient(135deg,#1E40AF,#0EA5E9,#06B6D4);padding:72px 0;text-align:center;color:#fff">
+    <div class="container fade-in">
+      <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;margin-bottom:12px">
+        Start Your Journey Today
+      </h2>
+      <p style="opacity:0.9;max-width:500px;margin:0 auto 28px;font-size:1.05rem">
+        Let our experts craft the perfect itinerary for your next unforgettable adventure.
+      </p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+        <a href="booking.html" class="btn btn-white">✈ Book Now</a>
+        <a href="destinations.html" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,0.4)">🌍 Explore Destinations</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo">✈ Aurora Travels</div>
+          <p>Your trusted partner for extraordinary luxury travel experiences. Licensed by the Philippine Department of Tourism since 2012.</p>
+          <div class="footer-social">
+            <a class="social-btn" href="https://www.facebook.com" target="_blank">f</a>
+            <a class="social-btn" href="https://www.instagram.com" target="_blank">in</a>
+            <a class="social-btn" href="https://www.twitter.com" target="_blank">𝕏</a>
+            <a class="social-btn" href="https://www.youtube.com" target="_blank">▶</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="packages.html">Packages</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="booking.html">Book Now</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+6328001234">+63 2 800 1234</a></li>
+            <li><a href="mailto:info@auroratravels.ph">info@auroratravels.ph</a></li>
+            <li><a href="#">Makati (HQ)</a></li>
+            <li><a href="#">Cebu Branch</a></li>
+            <li><a href="#">Davao Branch</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="contact.html">FAQs</a></li>
+            <li><a href="booking.html">Booking Policy</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="https://www.tourism.gov.ph" target="_blank">DOT Philippines</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Aurora Travels. All rights reserved. | DOT Accredited Agency No. PH-2026-AT-0042</p>
+        <div class="clock-widget">
+          <div class="clock-time" id="clockTime">00:00:00</div>
+          <div class="clock-date" id="clockDate">—</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+  </script>
+
+  <script>
+    // ============================================================
+    // AURORA TRAVELS — Internal JavaScript (contact.html)
+    // ============================================================
+
+    // ---- EmailJS Initialization ----
+    (function() {
+      emailjs.init({
+        publicKey: "qh5RptHl-lE9cgn2O",   // Updated public key
+      });
+    })();
+
+    // Loading screen
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        var l = document.getElementById('loading-screen');
+        if (l) l.classList.add('hidden');
+      }, 2200);
+    });
+
+    // Dark/Light mode
+    var isDark = localStorage.getItem('aurora-theme') === 'dark';
+    var themeBtn = document.getElementById('themeToggle');
+    if (isDark) { document.body.classList.add('dark');
+      themeBtn.textContent = '☀️'; }
+    themeBtn.addEventListener('click', function() {
+      document.body.classList.toggle('dark');
+      isDark = document.body.classList.contains('dark');
+      themeBtn.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('aurora-theme', isDark ? 'dark' : 'light');
+    });
+
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('mobile-open');
+    });
+
+    // Scroll to top
+    window.addEventListener('scroll', function() {
+      var b = document.getElementById('scroll-top');
+      if (b) { if (window.scrollY > 400) b.classList.add('visible');
+        else b.classList.remove('visible'); }
+    });
+
+    // Fade-in on scroll
+    var fadeEls = document.querySelectorAll('.fade-in');
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible');
+          obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(function(el) { obs.observe(el); });
+
+    // Clock
+    function updateClock() {
+      var n = new Date();
+      var h = String(n.getHours()).padStart(2, '0');
+      var m = String(n.getMinutes()).padStart(2, '0');
+      var s = String(n.getSeconds()).padStart(2, '0');
+      var t = document.getElementById('clockTime');
+      var d = document.getElementById('clockDate');
+      var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+        'November', 'December'
+      ];
+      if (t) t.textContent = h + ':' + m + ':' + s;
+      if (d) d.textContent = days[n.getDay()] + ', ' + months[n.getMonth()] + ' ' + n.getDate() + ', ' + n
+      .getFullYear();
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ---- FAQ Accordion ----
+    function toggleFaq(header) {
+      var item = header.closest('.accordion-item');
+      var isOpen = item.classList.contains('open');
+      // Close all in same accordion
+      var accordion = item.closest('.accordion');
+      accordion.querySelectorAll('.accordion-item').forEach(function(i) {
+        i.classList.remove('open');
+      });
+      if (!isOpen) item.classList.add('open');
+    }
+
+    // ---- Contact Form Validation & EmailJS Submission ----
+    function submitContact(e) {
+      e.preventDefault();
+      var valid = true;
+      var checks = [
+        { id: 'cName', err: 'err-cName' },
+        { id: 'cEmail', err: 'err-cEmail' },
+        { id: 'cSubject', err: 'err-cSubject' },
+        { id: 'cMessage', err: 'err-cMessage' }
+      ];
+      checks.forEach(function(c) {
+        var el = document.getElementById(c.id);
+        var err = document.getElementById(c.err);
+        if (!el.value.trim()) {
+          el.classList.add('error');
+          err.classList.add('show');
+          valid = false;
+        } else {
+          el.classList.remove('error');
+          err.classList.remove('show');
+        }
+      });
+      // Email validation
+      var emailEl = document.getElementById('cEmail');
+      if (emailEl.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+        emailEl.classList.add('error');
+        document.getElementById('err-cEmail').classList.add('show');
+        valid = false;
+      }
+      if (!valid) {
+        document.querySelector('.form-control.error').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // ---- Build parameters matching your EmailJS template ----
+      var templateParams = {
+        name: document.getElementById('cName').value,
+        email: document.getElementById('cEmail').value,
+        phone: document.getElementById('cPhone').value || 'Not provided',
+        subject: document.getElementById('cSubject').value,
+        message: document.getElementById('cMessage').value,
+        username: document.getElementById('cName').value   // used in subject line
+      };
+
+      // Disable submit button
+      var submitBtn = e.target.querySelector('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      emailjs.send('service_inxk5hy', 'template_u4lwrqo', templateParams)
+        .then(function(response) {
+          console.log('Contact email sent!', response.status, response.text);
+          // Show success
+          document.getElementById('contactFormCard').style.display = 'none';
+          document.getElementById('contact-success').classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (submitBtn) submitBtn.disabled = false;
+        })
+        .catch(function(error) {
+          // Show the exact error from EmailJS
+          var errMsg = 'EmailJS error:\n';
+          if (error.text) errMsg += error.text;
+          else if (error.message) errMsg += error.message;
+          else errMsg += 'Unknown error – check console (F12) for details.';
+          alert(errMsg);
+          console.error('EmailJS error:', error);
+          if (submitBtn) submitBtn.disabled = false;
+          // Form stays visible – user can retry
+        });
+    }
+
+    function resetContactForm() {
+      document.getElementById('contactForm').reset();
+      document.querySelectorAll('.form-error').forEach(function(e) { e.classList.remove('show'); });
+      document.querySelectorAll('.form-control').forEach(function(e) { e.classList.remove('error'); });
+      document.getElementById('contact-success').classList.remove('show');
+      document.getElementById('contactFormCard').style.display = '';
+    }
+  </script>
+</body>
+</html>

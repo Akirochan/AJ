@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Packages — Aurora Travels</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Internal CSS — Packages Page */
+    .pkg-hero-badge {
+      display: inline-block; background: rgba(255,255,255,0.18); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.35); border-radius: 99px;
+      padding: 6px 18px; font-size: 0.82rem; font-weight: 600; color: #fff;
+      letter-spacing: 1px; margin-bottom: 16px;
+    }
+    .compare-highlight { background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(6,182,212,0.06)); }
+    .pkg-divider { border: none; border-top: 2px solid var(--glass-border); margin: 60px 0; }
+    .benefit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 40px; }
+    .benefit-card {
+      background: var(--card); border-radius: var(--radius); padding: 24px 20px; text-align: center;
+      box-shadow: var(--shadow); border: 1px solid var(--glass-border); transition: all 0.35s;
+    }
+    .benefit-card:hover { transform: translateY(-4px); }
+    .benefit-icon { font-size: 2rem; margin-bottom: 12px; }
+    .benefit-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .benefit-card p  { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+    .popular-ribbon { position: absolute; top: 0; left: 0; background: linear-gradient(90deg,#16a34a,#059669); color:#fff; font-size:0.72rem; font-weight:700; padding:5px 16px; border-radius:var(--radius) 0 12px 0; }
+  </style>
+</head>
+<body>
+
+<div id="loading-screen">
+  <div class="loader-logo">✈ Aurora Travels</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <p class="loader-text">Loading packages…</p>
+</div>
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">✈ Aurora Travels</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="packages.html" class="active">Packages</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="booking.html">Book Now</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeToggle">🌙</button>
+      <a href="booking.html" class="btn-nav-cta">Book Now</a>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb" style="color:rgba(255,255,255,0.7)"><a href="index.html" style="color:rgba(255,255,255,0.9)">Home</a><span>/</span><span style="color:#fff">Packages</span></div>
+    <div class="pkg-hero-badge">🎒 Curated Travel Packages</div>
+    <h1>Discover Our <span style="color:#67E8F9">Premium Packages</span></h1>
+    <p>From intimate luxury escapes to thrilling multi-country adventures — we have the perfect package for every traveler.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs" id="pkgFilter">
+      <button class="filter-btn active" onclick="filterPkg(this,'all')">🌍 All Packages</button>
+      <button class="filter-btn" onclick="filterPkg(this,'luxury')">💎 Luxury</button>
+      <button class="filter-btn" onclick="filterPkg(this,'adventure')">🏔 Adventure</button>
+      <button class="filter-btn" onclick="filterPkg(this,'family')">👨‍👩‍👧 Family</button>
+      <button class="filter-btn" onclick="filterPkg(this,'romance')">🌹 Romance</button>
+      <button class="filter-btn" onclick="filterPkg(this,'culture')">🏛 Culture</button>
+    </div>
+
+    <div class="packages-grid" id="pkgGrid">
+
+      <!-- Package 1: Maldives Luxury -->
+      <div class="pkg-card fade-in" data-type="luxury">
+        <div class="pkg-badge-feat">💎 Ultra Luxury</div>
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700&q=80" alt="Maldives Luxury Overwater Villa" class="pkg-img" />
+        <div class="pkg-body">
+          <div class="pkg-type">💎 Luxury Escape</div>
+          <h3 class="pkg-name">Maldives Ultimate Luxury</h3>
+          <p class="pkg-desc">Seven nights in a private overwater villa with butler service, sunrise yoga on your deck, and a personal chef preparing fresh Maldivian cuisine.</p>
+          <ul class="pkg-features">
+            <li>Overwater villa with private pool</li>
+            <li>Dedicated personal butler 24/7</li>
+            <li>All-inclusive dining &amp; beverages</li>
+            <li>Seaplane transfers included</li>
+            <li>Snorkeling &amp; diving gear provided</li>
+            <li>Sunset dolphin cruise</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱350,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 2: Japan Explorer -->
+      <div class="pkg-card fade-in" data-type="culture">
+        <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=700&q=80" alt="Japan Cultural Tour" class="pkg-img" />
+        <div class="pkg-body">
+          <div class="pkg-type">🏛 Cultural Immersion</div>
+          <h3 class="pkg-name">Japan Cultural Discovery</h3>
+          <p class="pkg-desc">Immerse yourself in 12 days of Japanese culture — from Tokyo's neon streets to Kyoto's ancient geisha district and the serenity of Nara's deer parks.</p>
+          <ul class="pkg-features">
+            <li>Return flights from Manila</li>
+            <li>4-star ryokan &amp; hotel stays</li>
+            <li>Shinkansen bullet train pass</li>
+            <li>Tea ceremony experience</li>
+            <li>Sumo wrestling show tickets</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱115,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 3: Asia Grand Tour -->
+      <div class="pkg-card featured fade-in" data-type="adventure">
+        <div class="pkg-badge-feat">⭐ Best Value</div>
+        <img src="https://images.unsplash.com/photo-1565967511849-76a60a516170?w=700&q=80" alt="Asia Grand Tour" class="pkg-img" />
+        <div class="pkg-body">
+          <div class="pkg-type">🌏 Multi-Country</div>
+          <h3 class="pkg-name">Asia Grand Explorer Tour</h3>
+          <p class="pkg-desc">The ultimate 21-day journey across 4 iconic Asian destinations — Japan, South Korea, Singapore, and Thailand — in one incredible adventure.</p>
+          <ul class="pkg-features">
+            <li>All inter-city flights included</li>
+            <li>4-star hotels in all 4 countries</li>
+            <li>Expert local tour guides</li>
+            <li>Cultural activities daily</li>
+            <li>Airport transfers all included</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱220,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 4: Italian Romance -->
+      <div class="pkg-card fade-in" data-type="romance">
+        <div class="popular-ribbon">🌹 Romance Special</div>
+        <img src="https://images.unsplash.com/photo-1529260830199-42c24126f198?w=700&q=80" alt="Italy Romance Tour" class="pkg-img" style="margin-top:32px" />
+        <div class="pkg-body">
+          <div class="pkg-type">🌹 Romantic Getaway</div>
+          <h3 class="pkg-name">Italian Romance Escape</h3>
+          <p class="pkg-desc">Walk hand-in-hand through Rome's cobblestone streets, glide under Venetian bridges, and watch the sun set over Florence's terracotta rooftops.</p>
+          <ul class="pkg-features">
+            <li>10 nights in boutique hotels</li>
+            <li>Private gondola ride in Venice</li>
+            <li>Candlelit dinner by the Trevi Fountain</li>
+            <li>Wine tasting in Tuscany</li>
+            <li>Couples spa experience</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱145,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 5: Norway Northern Lights -->
+      <div class="pkg-card fade-in" data-type="luxury">
+        <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=700&q=80" alt="Norway Northern Lights" class="pkg-img" />
+        <div class="pkg-body">
+          <div class="pkg-type">💎 Luxury Arctic</div>
+          <h3 class="pkg-name">Norway Northern Lights Luxury</h3>
+          <p class="pkg-desc">Chase the aurora borealis in a glass-roofed arctic cabin, cruise through majestic fjords, and ski down world-class Norwegian slopes in style.</p>
+          <ul class="pkg-features">
+            <li>Glass igloo accommodation</li>
+            <li>Guided Northern Lights tours</li>
+            <li>Fjord cruise experience</li>
+            <li>Dog sledding adventure</li>
+            <li>Gourmet Nordic cuisine</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱280,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 6: Australia Family -->
+      <div class="pkg-card fade-in" data-type="family">
+        <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=700&q=80" alt="Australia Family Adventure" class="pkg-img" />
+        <div class="pkg-body">
+          <div class="pkg-type">👨‍👩‍👧 Family Fun</div>
+          <h3 class="pkg-name">Australia Family Adventure</h3>
+          <p class="pkg-desc">A 14-day family-friendly journey through Sydney, the Great Barrier Reef, and Cairns — packed with wildlife encounters, reef snorkeling, and beach fun.</p>
+          <ul class="pkg-features">
+            <li>Family suites in all hotels</li>
+            <li>Great Barrier Reef snorkeling</li>
+            <li>Wildlife sanctuary passes</li>
+            <li>Sydney Harbour Bridge climb</li>
+            <li>Kids activity program daily</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱185,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 7: Iceland Fire & Ice -->
+      <div class="pkg-card fade-in" data-type="adventure">
+        <img src="https://images.unsplash.com/photo-1476610182048-b716b8518aae?w=700&q=80" alt="Iceland Fire and Ice Adventure" class="pkg-img" />
+        <div class="pkg-body">
+          <div class="pkg-type">🏔 Extreme Adventure</div>
+          <h3 class="pkg-name">Iceland Fire &amp; Ice Expedition</h3>
+          <p class="pkg-desc">Hike across glaciers, dive between tectonic plates, watch geysers erupt, and soak in natural hot springs on this 10-day Icelandic expedition.</p>
+          <ul class="pkg-features">
+            <li>Glacier hiking with guide</li>
+            <li>Blue Lagoon thermal spa access</li>
+            <li>Snorkeling at Silfra fissure</li>
+            <li>Golden Circle full-day tour</li>
+            <li>4WD highland adventure</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱210,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 8: Dubai Ultramodern -->
+      <div class="pkg-card fade-in" data-type="luxury">
+        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=700&q=80" alt="Dubai Luxury Experience" class="pkg-img" />
+        <div class="pkg-body">
+          <div class="pkg-type">💎 Urban Luxury</div>
+          <h3 class="pkg-name">Dubai Ultramodern Luxury</h3>
+          <p class="pkg-desc">Stay in a 5-star Burj Al Arab-view hotel, dine at Michelin-starred restaurants, shop on the Dubai Mall, and experience the ultimate desert sunset.</p>
+          <ul class="pkg-features">
+            <li>5-star hotel with Burj views</li>
+            <li>Burj Khalifa At the Top access</li>
+            <li>Desert safari with dinner</li>
+            <li>Dubai Frame &amp; Museum of the Future</li>
+            <li>Yacht cruise along Dubai Marina</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱175,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Package 9: New Zealand Family -->
+      <div class="pkg-card fade-in" data-type="family">
+        <img src="https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=700&q=80" alt="New Zealand Family Vacation" class="pkg-img" />
+        <div class="pkg-body">
+          <div class="pkg-type">👨‍👩‍👧 Family Nature</div>
+          <h3 class="pkg-name">New Zealand Family Discovery</h3>
+          <p class="pkg-desc">Explore both islands of New Zealand with the whole family — visit Hobbiton, cruise Milford Sound, and experience the Māori cultural performances.</p>
+          <ul class="pkg-features">
+            <li>Hobbiton Movie Set tour</li>
+            <li>Milford Sound scenic cruise</li>
+            <li>Rotorua Māori village evening</li>
+            <li>Queenstown family activities</li>
+            <li>Glowworm cave experience</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱195,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end pkgGrid -->
+
+    <hr class="pkg-divider" />
+
+    <!-- Price Comparison Table -->
+    <div class="fade-in">
+      <div class="section-header">
+        <div class="section-tag">💰 Price Comparison</div>
+        <h2 class="section-title">Package <span>Pricing Table</span></h2>
+        <p class="section-subtitle">Compare what's included across our most popular packages</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Package Name</th>
+              <th>Duration</th>
+              <th>Destination(s)</th>
+              <th>Type</th>
+              <th>Price / Person</th>
+              <th>Meals</th>
+              <th>Flights</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Maldives Ultimate Luxury</strong></td>
+              <td>7 nights</td>
+              <td>Maldives</td>
+              <td><span class="badge">Luxury</span></td>
+              <td class="price-cell">₱350,000</td>
+              <td>All-Inclusive</td>
+              <td>✅ Included</td>
+            </tr>
+            <tr>
+              <td><strong>Asia Grand Explorer Tour</strong></td>
+              <td>21 days</td>
+              <td>Japan, South Korea, Singapore, Thailand</td>
+              <td><span class="badge badge-amber">Adventure</span></td>
+              <td class="price-cell">₱220,000</td>
+              <td>Breakfast Daily</td>
+              <td>✅ Included</td>
+            </tr>
+            <tr>
+              <td><strong>Norway Northern Lights</strong></td>
+              <td>10 nights</td>
+              <td>Norway</td>
+              <td><span class="badge">Luxury</span></td>
+              <td class="price-cell">₱280,000</td>
+              <td>Breakfast + Dinner</td>
+              <td>✅ Included</td>
+            </tr>
+            <tr>
+              <td><strong>Italian Romance Escape</strong></td>
+              <td>10 nights</td>
+              <td>Rome, Florence, Venice</td>
+              <td><span class="badge badge-green">Romance</span></td>
+              <td class="price-cell">₱145,000</td>
+              <td>Breakfast Daily</td>
+              <td>✅ Included</td>
+            </tr>
+            <tr>
+              <td><strong>Iceland Fire &amp; Ice</strong></td>
+              <td>10 days</td>
+              <td>Iceland</td>
+              <td><span class="badge badge-amber">Adventure</span></td>
+              <td class="price-cell">₱210,000</td>
+              <td>Breakfast Daily</td>
+              <td>✅ Included</td>
+            </tr>
+            <tr>
+              <td><strong>Australia Family Adventure</strong></td>
+              <td>14 days</td>
+              <td>Sydney, Great Barrier Reef, Cairns</td>
+              <td><span class="badge badge-green">Family</span></td>
+              <td class="price-cell">₱185,000</td>
+              <td>Breakfast + Select Dinners</td>
+              <td>✅ Included</td>
+            </tr>
+            <tr>
+              <td><strong>Dubai Ultramodern Luxury</strong></td>
+              <td>7 nights</td>
+              <td>Dubai, UAE</td>
+              <td><span class="badge">Luxury</span></td>
+              <td class="price-cell">₱175,000</td>
+              <td>Breakfast Daily</td>
+              <td>✅ Included</td>
+            </tr>
+            <tr>
+              <td><strong>Japan Cultural Discovery</strong></td>
+              <td>12 days</td>
+              <td>Tokyo, Kyoto, Osaka, Nara</td>
+              <td><span class="badge badge-amber">Culture</span></td>
+              <td class="price-cell">₱115,000</td>
+              <td>Breakfast Daily</td>
+              <td>✅ Included</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="text-align:center;color:var(--text-light);font-size:0.85rem;margin-top:16px">
+        All prices are per person based on double-occupancy. <sup>*</sup>Single supplement charges apply.<br/>
+        Group discounts<sub>(5+ guests)</sub> available — <a href="contact.html" style="color:var(--primary)">contact us</a> for rates.
+      </p>
+    </div>
+
+    <hr class="pkg-divider" />
+
+    <!-- Package Benefits -->
+    <div class="fade-in">
+      <div class="section-header">
+        <div class="section-tag">🎁 What's Included</div>
+        <h2 class="section-title">Every Package <span>Includes</span></h2>
+        <p class="section-subtitle">When you book with Aurora Travels, extraordinary service comes standard</p>
+      </div>
+      <div class="benefit-grid">
+        <div class="benefit-card fade-in"><div class="benefit-icon">✈</div><h4>Return Flights</h4><p>All international return flights from Manila are included in every package.</p></div>
+        <div class="benefit-card fade-in"><div class="benefit-icon">🏨</div><h4>Premium Hotels</h4><p>Minimum 4-star accommodations verified personally by our travel consultants.</p></div>
+        <div class="benefit-card fade-in"><div class="benefit-icon">🚌</div><h4>All Transfers</h4><p>Airport, hotel, and inter-city transfers are arranged and included.</p></div>
+        <div class="benefit-card fade-in"><div class="benefit-icon">🧭</div><h4>Expert Guides</h4><p>Professional English-speaking local guides accompany every itinerary.</p></div>
+        <div class="benefit-card fade-in"><div class="benefit-icon">📱</div><h4>24/7 Support</h4><p>Dedicated travel concierge available around the clock throughout your trip.</p></div>
+        <div class="benefit-card fade-in"><div class="benefit-icon">🛡</div><h4>Travel Insurance</h4><p>Comprehensive travel insurance covering medical, cancellation, and baggage.</p></div>
+        <div class="benefit-card fade-in"><div class="benefit-icon">📷</div><h4>Photo Service</h4><p>Professional photography sessions at key landmarks on select packages.</p></div>
+        <div class="benefit-card fade-in"><div class="benefit-icon">🎫</div><h4>Attraction Tickets</h4><p>Pre-booked tickets to all listed attractions — no queuing on arrival.</p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">✈ Aurora Travels</div>
+        <p>Premium travel packages crafted for every type of adventurer since 2012.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="https://www.facebook.com" target="_blank">f</a>
+          <a class="social-btn" href="https://www.instagram.com" target="_blank">in</a>
+          <a class="social-btn" href="https://www.twitter.com" target="_blank">𝕏</a>
+          <a class="social-btn" href="https://www.youtube.com" target="_blank">▶</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Our Packages</h4><ul>
+        <li><a href="#">Luxury Escapes</a></li><li><a href="#">Adventure Tours</a></li>
+        <li><a href="#">Family Packages</a></li><li><a href="#">Romantic Getaways</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Quick Links</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="destinations.html">Destinations</a></li>
+        <li><a href="booking.html">Book Now</a></li><li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Support</h4><ul>
+        <li><a href="contact.html">FAQs</a></li><li><a href="booking.html">Booking Policy</a></li>
+        <li><a href="about.html">About Aurora</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Aurora Travels. All rights reserved.</p>
+      <div class="clock-widget"><div class="clock-time" id="clockTime">00:00:00</div><div class="clock-date" id="clockDate">—</div></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('loading-screen');if(l)l.classList.add('hidden');},2200);});
+  var isDark=localStorage.getItem('aurora-theme')==='dark';
+  var themeBtn=document.getElementById('themeToggle');
+  if(isDark){document.body.classList.add('dark');themeBtn.textContent='☀️';}
+  themeBtn.addEventListener('click',function(){document.body.classList.toggle('dark');isDark=document.body.classList.contains('dark');themeBtn.textContent=isDark?'☀️':'🌙';localStorage.setItem('aurora-theme',isDark?'dark':'light');});
+  document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('mobile-open');});
+  window.addEventListener('scroll',function(){var b=document.getElementById('scroll-top');if(b){if(window.scrollY>400)b.classList.add('visible');else b.classList.remove('visible');}});
+  var fadeEls=document.querySelectorAll('.fade-in');
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
+  fadeEls.forEach(function(el){obs.observe(el);});
+  function updateClock(){var n=new Date();var h=String(n.getHours()).padStart(2,'0');var m=String(n.getMinutes()).padStart(2,'0');var s=String(n.getSeconds()).padStart(2,'0');var t=document.getElementById('clockTime');var d=document.getElementById('clockDate');var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];var months=['January','February','March','April','May','June','July','August','September','October','November','December'];if(t)t.textContent=h+':'+m+':'+s;if(d)d.textContent=days[n.getDay()]+', '+months[n.getMonth()]+' '+n.getDate()+', '+n.getFullYear();}
+  updateClock();setInterval(updateClock,1000);
+
+  // Package Filter
+  function filterPkg(btn, type) {
+    document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    var cards = document.querySelectorAll('#pkgGrid .pkg-card');
+    cards.forEach(function(card){
+      var t = card.getAttribute('data-type');
+      card.style.display = (type === 'all' || t === type) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

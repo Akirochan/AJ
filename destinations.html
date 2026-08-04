@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Destinations — Aurora Travels</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Internal CSS — Destinations Page */
+    .cat-hero {
+      background: linear-gradient(135deg, #1E40AF, #0EA5E9, #06B6D4);
+      padding: 56px 0 40px; color: #fff;
+    }
+    .category-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+    .cat-pill {
+      padding: 8px 20px; border-radius: 99px;
+      border: 1.5px solid rgba(255,255,255,0.4); color: #fff; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: all 0.3s; background: rgba(255,255,255,0.1);
+    }
+    .cat-pill.active, .cat-pill:hover {
+      background: #fff; color: var(--primary);
+    }
+    .dest-detail {
+      display: none; padding: 14px 18px; background: rgba(37,99,235,0.04);
+      border-top: 1px solid var(--glass-border); font-size: 0.85rem; color: var(--text-light);
+    }
+    .dest-detail.show { display: block; }
+    .dest-detail h4 { color: var(--text); font-size: 0.9rem; margin-bottom: 8px; }
+    .dest-detail ul { padding-left: 18px; list-style: disc; }
+    .dest-detail li { margin-bottom: 4px; }
+    .attractions-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .attr-tag { background: rgba(37,99,235,0.1); color: var(--primary); padding: 3px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 600; }
+    #no-results { display: none; text-align: center; padding: 64px 0; color: var(--text-light); }
+    #no-results h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+<div id="loading-screen">
+  <div class="loader-logo">✈ Aurora Travels</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <p class="loader-text">Loading destinations…</p>
+</div>
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">✈ Aurora Travels</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="destinations.html" class="active">Destinations</a>
+      <a href="packages.html">Packages</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="booking.html">Book Now</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeToggle">🌙</button>
+      <a href="booking.html" class="btn-nav-cta">Book Now</a>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<section class="cat-hero">
+  <div class="container">
+    <div class="breadcrumb" style="color:rgba(255,255,255,0.7)">
+      <a href="index.html" style="color:rgba(255,255,255,0.9)">Home</a>
+      <span>/</span><span style="color:#fff">Destinations</span>
+    </div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.2rem);font-weight:900;margin:12px 0 10px">Explore Our <span style="color:#67E8F9">Destinations</span></h1>
+    <p style="opacity:0.85;max-width:540px;font-size:1.05rem">Discover 15 breathtaking destinations across Asia, Europe, Oceania, and the Middle East — each curated for an extraordinary travel experience.</p>
+    <div class="category-pills">
+      <div class="cat-pill active" onclick="filterCat(this,'all')">🌍 All</div>
+      <div class="cat-pill" onclick="filterCat(this,'asia')">🌏 Asia</div>
+      <div class="cat-pill" onclick="filterCat(this,'europe')">🏰 Europe</div>
+      <div class="cat-pill" onclick="filterCat(this,'oceania')">🦘 Oceania</div>
+      <div class="cat-pill" onclick="filterCat(this,'middle-east')">🕌 Middle East</div>
+      <div class="cat-pill" onclick="filterCat(this,'indian-ocean')">🐚 Indian Ocean</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <!-- Search -->
+    <div class="search-bar">
+      <input type="text" id="destSearch" placeholder="🔍  Search destinations, countries, activities…" oninput="searchDest()" />
+      <button class="btn btn-primary btn-sm" onclick="searchDest()">Search</button>
+    </div>
+
+    <div id="no-results">
+      <h3>No destinations found</h3>
+      <p>Try a different keyword — e.g., "Japan", "beach", or "adventure".</p>
+      <button class="btn btn-primary" onclick="resetSearch()" style="margin-top:16px">View All</button>
+    </div>
+
+    <div class="destinations-grid" id="destGrid">
+
+      <!-- Japan -->
+      <div class="dest-card fade-in" data-cat="asia" data-name="japan tokyo kyoto osaka sakura temple anime">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=600&q=80" alt="Japan — cherry blossoms and Mount Fuji" loading="lazy" />
+          <div class="dest-badge">Best Seller</div>
+          <div class="dest-rating">★ 4.9</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🌏 Asia • Japan</div>
+          <h3 class="dest-name">Japan</h3>
+          <p class="dest-desc">A land of striking contrasts — ancient Shinto shrines, futuristic neon cities, and tranquil bamboo forests. Japan offers travelers an unparalleled cultural immersion.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>7–14 days</strong></span>
+            <span>📅 <strong>Mar–May, Oct–Nov</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱85,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Mount Fuji</span><span class="attr-tag">Fushimi Inari</span><span class="attr-tag">Shibuya Crossing</span><span class="attr-tag">Arashiyama Bamboo Grove</span><span class="attr-tag">Akihabara</span></div>
+            <p style="margin-top:10px">Best season: <strong>Spring (March–May)</strong> for cherry blossoms. Estimated trip cost: <strong>₱85,000–₱150,000</strong> per person including flights from Manila.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- South Korea -->
+      <div class="dest-card fade-in" data-cat="asia" data-name="south korea seoul busan k-pop hanbok palace kimchi">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=600&q=80" alt="South Korea — Seoul skyline" loading="lazy" />
+          <div class="dest-badge">Trending</div>
+          <div class="dest-rating">★ 4.8</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🌏 Asia • South Korea</div>
+          <h3 class="dest-name">South Korea</h3>
+          <p class="dest-desc">From K-pop culture and street food markets to ancient palaces and scenic coastal towns — South Korea is a vibrant blend of tradition and modernity.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>7–10 days</strong></span>
+            <span>📅 <strong>Apr–Jun, Sep–Nov</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱72,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Gyeongbokgung Palace</span><span class="attr-tag">Namsan Tower</span><span class="attr-tag">Jeju Island</span><span class="attr-tag">Myeongdong</span><span class="attr-tag">Bukchon Hanok Village</span></div>
+            <p style="margin-top:10px">Best season: <strong>Autumn (September–November)</strong> for foliage. Estimated cost: <strong>₱72,000–₱120,000</strong> per person.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Singapore -->
+      <div class="dest-card fade-in" data-cat="asia" data-name="singapore marina bay gardens night safari merlion hawker">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1565967511849-76a60a516170?w=600&q=80" alt="Singapore — Marina Bay Sands" loading="lazy" />
+          <div class="dest-badge">City Break</div>
+          <div class="dest-rating">★ 4.7</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🌏 Asia • Singapore</div>
+          <h3 class="dest-name">Singapore</h3>
+          <p class="dest-desc">The "Lion City" dazzles with futuristic architecture, world-class food, pristine streets, and a perfectly blended multicultural identity.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>4–7 days</strong></span>
+            <span>📅 <strong>Feb–Apr, Jul–Sep</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱60,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Marina Bay Sands</span><span class="attr-tag">Gardens by the Bay</span><span class="attr-tag">Sentosa Island</span><span class="attr-tag">Universal Studios</span><span class="attr-tag">Hawker Centers</span></div>
+            <p style="margin-top:10px">Best season: <strong>February–April</strong> (dry season). Estimated cost: <strong>₱60,000–₱95,000</strong> per person.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thailand -->
+      <div class="dest-card fade-in" data-cat="asia" data-name="thailand bangkok phuket chiang mai temple beach elephant">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80" alt="Thailand — Bangkok temples" loading="lazy" />
+          <div class="dest-badge">Popular</div>
+          <div class="dest-rating">★ 4.7</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🌏 Asia • Thailand</div>
+          <h3 class="dest-name">Thailand</h3>
+          <p class="dest-desc">Golden temples, tropical islands, spicy street food, and genuine Thai hospitality — the "Land of Smiles" welcomes visitors with warmth and wonder.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>7–14 days</strong></span>
+            <span>📅 <strong>Nov–Feb</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱55,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Grand Palace</span><span class="attr-tag">Phi Phi Islands</span><span class="attr-tag">Chiang Mai Night Bazaar</span><span class="attr-tag">Elephant Sanctuary</span><span class="attr-tag">Floating Market</span></div>
+            <p style="margin-top:10px">Best season: <strong>November–February</strong> (cool &amp; dry). Estimated cost: <strong>₱55,000–₱90,000</strong> per person.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Philippines -->
+      <div class="dest-card fade-in" data-cat="asia" data-name="philippines palawan boracay siargao chocolate hills batanes">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1546484475-7f7bd55792da?w=600&q=80" alt="Philippines — Palawan island" loading="lazy" />
+          <div class="dest-badge">Home Pride</div>
+          <div class="dest-rating">★ 4.9</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🌏 Asia • Philippines</div>
+          <h3 class="dest-name">Philippines</h3>
+          <p class="dest-desc">Consistently ranked among the world's top beach destinations, the Philippines offers 7,641 islands of paradise, vibrant marine life, and world-class diving.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>7–14 days</strong></span>
+            <span>📅 <strong>Dec–May</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱35,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">El Nido, Palawan</span><span class="attr-tag">Boracay Beach</span><span class="attr-tag">Siargao Surfing</span><span class="attr-tag">Chocolate Hills</span><span class="attr-tag">Tubbataha Reef</span></div>
+            <p style="margin-top:10px">Best season: <strong>December–May</strong> (dry season). Estimated cost: <strong>₱35,000–₱70,000</strong> per person.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Maldives -->
+      <div class="dest-card fade-in" data-cat="indian-ocean" data-name="maldives overwater bungalow coral reef lagoon honeymoon luxury">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" alt="Maldives — turquoise lagoon" loading="lazy" />
+          <div class="dest-badge">Luxury Pick</div>
+          <div class="dest-rating">★ 5.0</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🐚 Indian Ocean • Maldives</div>
+          <h3 class="dest-name">Maldives</h3>
+          <p class="dest-desc">A string of jewels in the Indian Ocean, the Maldives is the ultimate luxury escape — overwater bungalows, bioluminescent beaches, and pristine coral reefs.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>5–10 days</strong></span>
+            <span>📅 <strong>Nov–Apr</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱180,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Overwater Villas</span><span class="attr-tag">Snorkeling</span><span class="attr-tag">Scuba Diving</span><span class="attr-tag">Whale Shark Watching</span><span class="attr-tag">Private Island Dining</span></div>
+            <p style="margin-top:10px">Best season: <strong>November–April</strong> (dry &amp; sunny). Estimated cost: <strong>₱180,000–₱350,000</strong> per person.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Switzerland -->
+      <div class="dest-card fade-in" data-cat="europe" data-name="switzerland alps skiing interlaken zurich alps chocolate fondue">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1527668752968-14dc70a27c95?w=600&q=80" alt="Switzerland — Matterhorn Alps" loading="lazy" />
+          <div class="dest-badge">Alpine Dream</div>
+          <div class="dest-rating">★ 4.8</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🏰 Europe • Switzerland</div>
+          <h3 class="dest-name">Switzerland</h3>
+          <p class="dest-desc">Pristine alpine lakes, the iconic Matterhorn, charming Swiss villages, and world-famous chocolate and cheese make Switzerland a fairy-tale destination.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>7–12 days</strong></span>
+            <span>📅 <strong>Jun–Sep, Dec–Feb</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱120,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Matterhorn</span><span class="attr-tag">Jungfraujoch</span><span class="attr-tag">Lake Geneva</span><span class="attr-tag">Interlaken</span><span class="attr-tag">Grindelwald Glacier</span></div>
+            <p style="margin-top:10px">Best season: <strong>Summer (June–September)</strong> for hiking; <strong>Winter</strong> for skiing. Cost: <strong>₱120,000–₱200,000</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- France -->
+      <div class="dest-card fade-in" data-cat="europe" data-name="france paris eiffel tower louvre versailles provence wine romance">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80" alt="France — Eiffel Tower Paris" loading="lazy" />
+          <div class="dest-badge">Most Romantic</div>
+          <div class="dest-rating">★ 4.9</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🏰 Europe • France</div>
+          <h3 class="dest-name">France</h3>
+          <p class="dest-desc">The Eiffel Tower at dusk, lavender fields in Provence, world-class cuisine, and the French Riviera — France is the art of living elevated to perfection.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>10–14 days</strong></span>
+            <span>📅 <strong>Apr–Oct</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱130,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Eiffel Tower</span><span class="attr-tag">Louvre Museum</span><span class="attr-tag">Palace of Versailles</span><span class="attr-tag">Provence Lavender Fields</span><span class="attr-tag">French Riviera</span></div>
+            <p style="margin-top:10px">Best season: <strong>April–October</strong>. Estimated cost: <strong>₱130,000–₱210,000</strong> per person.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Italy -->
+      <div class="dest-card fade-in" data-cat="europe" data-name="italy rome colosseum venice gondola amalfi coast pizza pasta">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1529260830199-42c24126f198?w=600&q=80" alt="Italy — Venice canals" loading="lazy" />
+          <div class="dest-badge">Classic Europe</div>
+          <div class="dest-rating">★ 4.9</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🏰 Europe • Italy</div>
+          <h3 class="dest-name">Italy</h3>
+          <p class="dest-desc">Ancient ruins in Rome, Renaissance masterpieces in Florence, romantic canals in Venice, and breathtaking Amalfi cliffs — Italy is a feast for all the senses.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>10–16 days</strong></span>
+            <span>📅 <strong>Apr–Jun, Sep–Oct</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱125,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Colosseum</span><span class="attr-tag">Vatican City</span><span class="attr-tag">Venice Canals</span><span class="attr-tag">Amalfi Coast</span><span class="attr-tag">Uffizi Gallery</span></div>
+            <p style="margin-top:10px">Best season: <strong>April–June and September–October</strong>. Cost: <strong>₱125,000–₱195,000</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dubai -->
+      <div class="dest-card fade-in" data-cat="middle-east" data-name="dubai UAE burj khalifa desert safari gold souq shopping mall fountain">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80" alt="Dubai — Burj Khalifa skyline" loading="lazy" />
+          <div class="dest-badge">Ultramodern</div>
+          <div class="dest-rating">★ 4.8</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🕌 Middle East • UAE</div>
+          <h3 class="dest-name">Dubai</h3>
+          <p class="dest-desc">A city that defies imagination — the world's tallest building, indoor ski slopes, gold souks, and desert safaris all within one extraordinary metropolis.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>5–8 days</strong></span>
+            <span>📅 <strong>Nov–Apr</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱95,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Burj Khalifa</span><span class="attr-tag">Palm Jumeirah</span><span class="attr-tag">Dubai Mall</span><span class="attr-tag">Desert Safari</span><span class="attr-tag">Gold Souk</span></div>
+            <p style="margin-top:10px">Best season: <strong>November–April</strong> (cooler weather). Cost: <strong>₱95,000–₱175,000</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Australia -->
+      <div class="dest-card fade-in" data-cat="oceania" data-name="australia sydney opera house great barrier reef uluru kangaroo">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&q=80" alt="Australia — Sydney Opera House" loading="lazy" />
+          <div class="dest-badge">Down Under</div>
+          <div class="dest-rating">★ 4.7</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🦘 Oceania • Australia</div>
+          <h3 class="dest-name">Australia</h3>
+          <p class="dest-desc">From the Sydney Opera House to the ancient Outback and the Great Barrier Reef, Australia is a continent-sized adventure waiting to be explored.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>14–21 days</strong></span>
+            <span>📅 <strong>Sep–Nov, Mar–May</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱150,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Sydney Opera House</span><span class="attr-tag">Great Barrier Reef</span><span class="attr-tag">Uluru</span><span class="attr-tag">Great Ocean Road</span><span class="attr-tag">Daintree Rainforest</span></div>
+            <p style="margin-top:10px">Best season: <strong>September–November</strong> (spring). Cost: <strong>₱150,000–₱250,000</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canada -->
+      <div class="dest-card fade-in" data-cat="oceania" data-name="canada banff niagara falls toronto aurora borealis rockies maple">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1519832979-6fa011b87667?w=600&q=80" alt="Canada — Banff National Park" loading="lazy" />
+          <div class="dest-badge">Northern Wild</div>
+          <div class="dest-rating">★ 4.8</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🌎 Americas • Canada</div>
+          <h3 class="dest-name">Canada</h3>
+          <p class="dest-desc">Turquoise glacial lakes in Banff, thundering Niagara Falls, multicultural Toronto, and the chance to witness the magical Northern Lights in the Yukon.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>14–21 days</strong></span>
+            <span>📅 <strong>Jun–Sep</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱155,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Banff National Park</span><span class="attr-tag">Niagara Falls</span><span class="attr-tag">CN Tower</span><span class="attr-tag">Northern Lights</span><span class="attr-tag">Whistler</span></div>
+            <p style="margin-top:10px">Best season: <strong>June–September</strong> for outdoor activities. Cost: <strong>₱155,000–₱240,000</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Norway -->
+      <div class="dest-card fade-in" data-cat="europe" data-name="norway fjords northern lights oslo aurora borealis viking hiking">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=600&q=80" alt="Norway — Northern Lights and fjords" loading="lazy" />
+          <div class="dest-badge">Aurora Country</div>
+          <div class="dest-rating">★ 4.9</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🏰 Europe • Norway</div>
+          <h3 class="dest-name">Norway</h3>
+          <p class="dest-desc">Dramatic fjords, the ethereal Northern Lights, midnight sun, and Viking heritage make Norway one of the world's most dramatic and awe-inspiring destinations.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>10–14 days</strong></span>
+            <span>📅 <strong>Sep–Mar (Lights)</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱165,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Geirangerfjord</span><span class="attr-tag">Northern Lights</span><span class="attr-tag">Lofoten Islands</span><span class="attr-tag">Trolltunga Hike</span><span class="attr-tag">Bergen Wharf</span></div>
+            <p style="margin-top:10px">Best for Northern Lights: <strong>September–March</strong>. Cost: <strong>₱165,000–₱260,000</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Iceland -->
+      <div class="dest-card fade-in" data-cat="europe" data-name="iceland northern lights geysers hot springs blue lagoon glaciers waterfalls">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1476610182048-b716b8518aae?w=600&q=80" alt="Iceland — Northern Lights over mountains" loading="lazy" />
+          <div class="dest-badge">Fire &amp; Ice</div>
+          <div class="dest-rating">★ 5.0</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🏰 Europe • Iceland</div>
+          <h3 class="dest-name">Iceland</h3>
+          <p class="dest-desc">Volcanic landscapes, geysers erupting beside glaciers, the Blue Lagoon, and the most spectacular Northern Lights on Earth — Iceland is unlike anywhere else.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>7–12 days</strong></span>
+            <span>📅 <strong>Sep–Apr</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱175,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Blue Lagoon</span><span class="attr-tag">Northern Lights</span><span class="attr-tag">Geysir &amp; Gullfoss</span><span class="attr-tag">Vatnajökull Glacier</span><span class="attr-tag">Diamond Beach</span></div>
+            <p style="margin-top:10px">Best season: <strong>September–April</strong> for aurora. Cost: <strong>₱175,000–₱280,000</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- New Zealand -->
+      <div class="dest-card fade-in" data-cat="oceania" data-name="new zealand hobbit lord of the rings bungee jumping fiordland milford sound">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=600&q=80" alt="New Zealand — Fiordland Milford Sound" loading="lazy" />
+          <div class="dest-badge">Adventure HQ</div>
+          <div class="dest-rating">★ 4.9</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">🦘 Oceania • New Zealand</div>
+          <h3 class="dest-name">New Zealand</h3>
+          <p class="dest-desc">Epic landscapes, Māori culture, world-class adventure sports, and the stunning Fiordland make New Zealand the ultimate destination for nature lovers and thrill-seekers.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>14–21 days</strong></span>
+            <span>📅 <strong>Dec–Feb</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱160,000</strong> <small>/ person</small></div>
+          <div style="display:flex;gap:10px">
+            <a href="booking.html" class="btn btn-primary btn-sm" style="flex:1;justify-content:center">Book Now</a>
+            <button class="btn btn-outline btn-sm" onclick="toggleDetail(this)">Details ▾</button>
+          </div>
+          <div class="dest-detail">
+            <h4>Top Attractions</h4>
+            <div class="attractions-row"><span class="attr-tag">Milford Sound</span><span class="attr-tag">Hobbiton</span><span class="attr-tag">Queenstown Bungee</span><span class="attr-tag">Fox Glacier</span><span class="attr-tag">Bay of Islands</span></div>
+            <p style="margin-top:10px">Best season: <strong>December–February</strong> (summer). Cost: <strong>₱160,000–₱265,000</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end destGrid -->
+
+    <!-- Ordered & Nested List Section -->
+    <div style="margin-top:72px" class="fade-in">
+      <div class="section-header">
+        <div class="section-tag">📋 Travel Guide</div>
+        <h2 class="section-title">How to <span>Plan Your Trip</span></h2>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start">
+        <!-- Ordered List -->
+        <div style="background:var(--card);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);border:1px solid var(--glass-border)">
+          <h3 style="margin-bottom:16px;font-size:1.1rem">Step-by-Step Booking Process</h3>
+          <ol style="padding-left:20px;color:var(--text-light)">
+            <li style="padding:7px 0;border-bottom:1px solid var(--glass-border)">Choose your destination from our <strong>15 featured countries</strong></li>
+            <li style="padding:7px 0;border-bottom:1px solid var(--glass-border)">Select a <em>package type</em> (Luxury, Adventure, or Family)</li>
+            <li style="padding:7px 0;border-bottom:1px solid var(--glass-border)">Check <mark>travel requirements</mark> and visa information</li>
+            <li style="padding:7px 0;border-bottom:1px solid var(--glass-border)">Fill in the booking form with your travel details</li>
+            <li style="padding:7px 0;border-bottom:1px solid var(--glass-border)">Receive a <u>booking confirmation</u> within 24 hours</li>
+            <li style="padding:7px 0;border-bottom:1px solid var(--glass-border)">Complete payment through our secure payment portal</li>
+            <li style="padding:7px 0">Pack your bags and enjoy your Aurora Travels journey!</li>
+          </ol>
+        </div>
+        <!-- Nested List -->
+        <div style="background:var(--card);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);border:1px solid var(--glass-border)">
+          <h3 style="margin-bottom:16px;font-size:1.1rem">Destinations by Category</h3>
+          <ul style="color:var(--text-light);padding-left:16px;list-style:disc">
+            <li style="padding:6px 0;font-weight:700;color:var(--text)">Asia
+              <ul style="padding-left:20px;margin-top:6px;list-style:circle;font-weight:400">
+                <li style="padding:3px 0">Japan — Cherry blossoms &amp; Mount Fuji</li>
+                <li style="padding:3px 0">South Korea — K-pop &amp; palaces</li>
+                <li style="padding:3px 0">Singapore — City-state of wonders</li>
+                <li style="padding:3px 0">Thailand — Temples &amp; island beaches</li>
+                <li style="padding:3px 0">Philippines — 7,641 island paradise</li>
+              </ul>
+            </li>
+            <li style="padding:6px 0;font-weight:700;color:var(--text)">Europe
+              <ul style="padding-left:20px;margin-top:6px;list-style:circle;font-weight:400">
+                <li style="padding:3px 0">Switzerland, France, Italy, Norway, Iceland</li>
+              </ul>
+            </li>
+            <li style="padding:6px 0;font-weight:700;color:var(--text)">Oceania &amp; Americas
+              <ul style="padding-left:20px;margin-top:6px;list-style:circle;font-weight:400">
+                <li style="padding:3px 0">Australia, Canada, New Zealand</li>
+              </ul>
+            </li>
+            <li style="padding:6px 0;font-weight:700;color:var(--text)">Middle East &amp; Indian Ocean
+              <ul style="padding-left:20px;margin-top:6px;list-style:circle;font-weight:400">
+                <li style="padding:3px 0">Dubai (UAE), Maldives</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">✈ Aurora Travels</div>
+        <p>Crafting extraordinary journeys to the world's most breathtaking destinations since 2012.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="https://www.facebook.com" target="_blank">f</a>
+          <a class="social-btn" href="https://www.instagram.com" target="_blank">in</a>
+          <a class="social-btn" href="https://www.twitter.com" target="_blank">𝕏</a>
+          <a class="social-btn" href="https://www.youtube.com" target="_blank">▶</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Quick Links</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="destinations.html">Destinations</a></li>
+        <li><a href="packages.html">Packages</a></li><li><a href="booking.html">Book Now</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Top Destinations</h4><ul>
+        <li><a href="#">Japan</a></li><li><a href="#">Maldives</a></li>
+        <li><a href="#">Norway</a></li><li><a href="#">Iceland</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Support</h4><ul>
+        <li><a href="contact.html">FAQs</a></li><li><a href="booking.html">Booking Policy</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Aurora Travels. All rights reserved.</p>
+      <div class="clock-widget"><div class="clock-time" id="clockTime">00:00:00</div><div class="clock-date" id="clockDate">—</div></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('loading-screen');if(l)l.classList.add('hidden');},2200);});
+  var isDark=localStorage.getItem('aurora-theme')==='dark';
+  var themeBtn=document.getElementById('themeToggle');
+  if(isDark){document.body.classList.add('dark');themeBtn.textContent='☀️';}
+  themeBtn.addEventListener('click',function(){document.body.classList.toggle('dark');isDark=document.body.classList.contains('dark');themeBtn.textContent=isDark?'☀️':'🌙';localStorage.setItem('aurora-theme',isDark?'dark':'light');});
+  document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('mobile-open');});
+  window.addEventListener('scroll',function(){var b=document.getElementById('scroll-top');if(b){if(window.scrollY>400)b.classList.add('visible');else b.classList.remove('visible');}});
+  var fadeEls=document.querySelectorAll('.fade-in');
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
+  fadeEls.forEach(function(el){obs.observe(el);});
+
+  function updateClock(){var n=new Date();var h=String(n.getHours()).padStart(2,'0');var m=String(n.getMinutes()).padStart(2,'0');var s=String(n.getSeconds()).padStart(2,'0');var t=document.getElementById('clockTime');var d=document.getElementById('clockDate');var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];var months=['January','February','March','April','May','June','July','August','September','October','November','December'];if(t)t.textContent=h+':'+m+':'+s;if(d)d.textContent=days[n.getDay()]+', '+months[n.getMonth()]+' '+n.getDate()+', '+n.getFullYear();}
+  updateClock();setInterval(updateClock,1000);
+
+  // Search
+  function searchDest(){
+    var q=document.getElementById('destSearch').value.toLowerCase().trim();
+    var cards=document.querySelectorAll('#destGrid .dest-card');
+    var count=0;
+    cards.forEach(function(card){
+      var name=(card.getAttribute('data-name')||'').toLowerCase();
+      var show=!q||name.indexOf(q)!==-1;
+      card.style.display=show?'':'none';
+      if(show)count++;
+    });
+    document.getElementById('no-results').style.display=count===0?'block':'none';
+  }
+  function resetSearch(){document.getElementById('destSearch').value='';searchDest();}
+
+  // Category filter
+  function filterCat(el,cat){
+    document.querySelectorAll('.cat-pill').forEach(function(p){p.classList.remove('active');});
+    el.classList.add('active');
+    var cards=document.querySelectorAll('#destGrid .dest-card');
+    cards.forEach(function(card){
+      var c=card.getAttribute('data-cat');
+      card.style.display=(cat==='all'||c===cat)?'':'none';
+    });
+    document.getElementById('no-results').style.display='none';
+  }
+
+  // Toggle detail
+  function toggleDetail(btn){
+    var detail=btn.closest('.dest-body').querySelector('.dest-detail');
+    detail.classList.toggle('show');
+    btn.textContent=detail.classList.contains('show')?'Details ▴':'Details ▾';
+  }
+
+  // URL param search
+  var params=new URLSearchParams(window.location.search);
+  var searchParam=params.get('search');
+  if(searchParam){document.getElementById('destSearch').value=searchParam;searchDest();}
+</script>
+</body>
+</html>
