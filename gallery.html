@@ -22,11 +22,12 @@
       margin-bottom: 8px;
     }
     .hero h1 {
-      font-size: 48px;
+      font-size: clamp(2rem, 5vw, 3.2rem);
       font-weight: 700;
       color: #0b1a2e;
       letter-spacing: -0.02em;
       margin-bottom: 12px;
+      white-space: nowrap;
     }
     .hero p {
       font-size: 18px;
@@ -116,9 +117,10 @@
     .modal-prev:hover, .modal-next:hover { background: rgba(255,255,255,0.3); }
     .modal-counter { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.75); font-size: 0.88rem; background: rgba(0,0,0,0.5); padding: 4px 14px; border-radius: 99px; }
 
+    /* Responsive */
     @media (max-width: 600px) {
       .video-grid { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 32px; }
+      .hero h1 { white-space: normal; font-size: 1.8rem; }
       .hero { padding: 40px 20px; }
     }
   </style>
@@ -267,7 +269,7 @@
         <p class="section-subtitle">Watch our complete travel showcase and discover amazing destinations around the world.</p>
       </div>
 
-      <!-- ===== AURORA OFFICIAL VIDEO (YouTube iframe) ===== -->
+      <!-- Aurora Official Video (YouTube iframe) -->
       <div style="margin-bottom:32px">
         <h3 style="margin-bottom:14px;font-size:1.1rem">Aurora Travels — Official Destination Video</h3>
         <div class="aurora-video-container">
@@ -285,7 +287,7 @@
         </p>
       </div>
 
-      <!-- Japan & Maldives Videos (correct embeds) -->
+      <!-- Japan & Maldives Videos -->
       <div class="video-grid">
         <div>
           <div class="video-wrap">
@@ -360,7 +362,7 @@
 </footer>
 
 <script>
-  // (all JavaScript remains the same as before – loading, theme, modal, filter, clock)
+  // (all JavaScript remains unchanged)
   window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('loading-screen');if(l)l.classList.add('hidden');},2200);});
   var isDark=localStorage.getItem('aurora-theme')==='dark';
   var themeBtn=document.getElementById('themeToggle');
@@ -440,4 +442,4 @@
   }
 </script>
 </body>
-</html>
+                                                                                                         </html>
