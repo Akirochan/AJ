@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     /* Internal CSS — Gallery Page */
-    /* --- Original Hero (from first screenshot) --- */
     .hero {
       padding: 60px 40px 40px 40px;
       text-align: center;
@@ -37,7 +36,6 @@
       line-height: 1.6;
     }
 
-    /* Dark mode adjustments for hero */
     body.dark .hero {
       background: #0f172a;
       border-bottom-color: #1e293b;
@@ -77,7 +75,6 @@
     .video-label h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
     .video-label p  { font-size: 0.85rem; color: var(--text-light); }
 
-    /* --- Force white text in dark mode for video labels --- */
     body.dark .video-label {
       background: #1e293b;
       border-color: #334155;
@@ -89,7 +86,7 @@
       color: rgba(255, 255, 255, 0.8) !important;
     }
 
-    /* Aurora featured video (the new YouTube embed) */
+    /* Aurora featured video container */
     .aurora-video-container {
       width: 100%;
       max-width: 800px;
@@ -107,7 +104,6 @@
       display: block;
     }
 
-    /* Modal nav arrows */
     .modal-prev, .modal-next {
       position: absolute; top: 50%; transform: translateY(-50%);
       width: 48px; height: 48px; border-radius: 50%;
@@ -119,7 +115,7 @@
     .modal-next { right: 16px; }
     .modal-prev:hover, .modal-next:hover { background: rgba(255,255,255,0.3); }
     .modal-counter { position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.75); font-size: 0.88rem; background: rgba(0,0,0,0.5); padding: 4px 14px; border-radius: 99px; }
-    /* responsive fix for video grid */
+
     @media (max-width: 600px) {
       .video-grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 32px; }
@@ -167,21 +163,16 @@
   </div>
 </nav>
 
-<!-- ===== ORIGINAL HERO (Aurora Travels) ===== -->
+<!-- Hero -->
 <div class="hero">
   <div class="brand">✦ Aurora Travels</div>
   <h1>Experience It Through Video</h1>
-  <p>
-    Watch our travel videos and get inspired for your next adventure
-    with Aurora Travels
-  </p>
+  <p>Watch our travel videos and get inspired for your next adventure with Aurora Travels</p>
 </div>
 
-<!-- Gallery content -->
 <section class="section">
   <div class="container">
 
-    <!-- Tabs -->
     <div class="gallery-tabs" style="margin-top:40px;">
       <button class="g-tab active" onclick="filterGallery(this,'all')">🌍 All Photos</button>
       <button class="g-tab" onclick="filterGallery(this,'asia')">🌏 Asia</button>
@@ -193,97 +184,79 @@
 
     <!-- Photo Grid -->
     <div class="gallery-grid" id="galleryGrid">
-
+      <!-- (all 18 images – keep as before) -->
       <div class="gallery-item" data-cat="asia" onclick="openModal(this)" data-index="0">
         <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=600&q=85" alt="Japan — Torii Gates at Fushimi Inari" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇯🇵 Japan — Fushimi Inari Shrine</span></div>
       </div>
-
       <div class="gallery-item" data-cat="europe" onclick="openModal(this)" data-index="1">
         <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=85" alt="Paris — Eiffel Tower at sunset" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇫🇷 France — Eiffel Tower at Sunset</span></div>
       </div>
-
       <div class="gallery-item" data-cat="beaches" onclick="openModal(this)" data-index="2">
         <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=85" alt="Maldives — crystal turquoise lagoon" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇲🇻 Maldives — Turquoise Paradise</span></div>
       </div>
-
       <div class="gallery-item" data-cat="europe nature" onclick="openModal(this)" data-index="3">
         <img src="https://images.unsplash.com/photo-1527668752968-14dc70a27c95?w=600&q=85" alt="Switzerland — Matterhorn and alpine lake" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇨🇭 Switzerland — Alpine Reflection</span></div>
       </div>
-
       <div class="gallery-item" data-cat="nature" onclick="openModal(this)" data-index="4">
         <img src="https://images.unsplash.com/photo-1476610182048-b716b8518aae?w=600&q=85" alt="Iceland — Northern Lights over snowy mountains" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇮🇸 Iceland — Aurora Borealis</span></div>
       </div>
-
       <div class="gallery-item" data-cat="asia" onclick="openModal(this)" data-index="5">
         <img src="https://images.unsplash.com/photo-1565967511849-76a60a516170?w=600&q=85" alt="Singapore — Marina Bay Sands at night" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇸🇬 Singapore — Marina Bay Sands</span></div>
       </div>
-
       <div class="gallery-item" data-cat="cities" onclick="openModal(this)" data-index="6">
         <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=85" alt="Dubai — Burj Khalifa skyline by night" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇦🇪 Dubai — Burj Khalifa at Night</span></div>
       </div>
-
       <div class="gallery-item" data-cat="europe" onclick="openModal(this)" data-index="7">
         <img src="https://images.unsplash.com/photo-1529260830199-42c24126f198?w=600&q=85" alt="Venice — Grand Canal gondola ride" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇮🇹 Italy — Venice Grand Canal</span></div>
       </div>
-
       <div class="gallery-item" data-cat="nature" onclick="openModal(this)" data-index="8">
         <img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=600&q=85" alt="Norway — Lofoten fjord panorama" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇳🇴 Norway — Lofoten Fjord</span></div>
       </div>
-
       <div class="gallery-item" data-cat="cities" onclick="openModal(this)" data-index="9">
         <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&q=85" alt="Sydney — Opera House and Harbour Bridge" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇦🇺 Australia — Sydney Harbour</span></div>
       </div>
-
       <div class="gallery-item" data-cat="asia" onclick="openModal(this)" data-index="10">
         <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=85" alt="Thailand — Wat Arun temple at golden hour" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇹🇭 Thailand — Wat Arun Temple</span></div>
       </div>
-
       <div class="gallery-item" data-cat="nature" onclick="openModal(this)" data-index="11">
         <img src="https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=600&q=85" alt="New Zealand — Milford Sound with mirror fjord" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇳🇿 New Zealand — Milford Sound</span></div>
       </div>
-
       <div class="gallery-item" data-cat="asia" onclick="openModal(this)" data-index="12">
         <img src="https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=600&q=85" alt="South Korea — Seoul cityscape at dusk" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇰🇷 South Korea — Seoul at Dusk</span></div>
       </div>
-
       <div class="gallery-item" data-cat="europe nature" onclick="openModal(this)" data-index="13">
         <img src="https://images.unsplash.com/photo-1519832979-6fa011b87667?w=600&q=85" alt="Canada — Banff National Park turquoise lake" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇨🇦 Canada — Lake Louise, Banff</span></div>
       </div>
-
       <div class="gallery-item" data-cat="beaches" onclick="openModal(this)" data-index="14">
         <img src="https://images.unsplash.com/photo-1546484475-7f7bd55792da?w=600&q=85" alt="Philippines — El Nido crystal lagoon" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🇵🇭 Philippines — El Nido Lagoon</span></div>
       </div>
-
       <div class="gallery-item" data-cat="cities" onclick="openModal(this)" data-index="15">
         <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=85" alt="Aerial view of a world-class travel destination" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🌍 Aurora Travels — Explore the World</span></div>
       </div>
-
       <div class="gallery-item" data-cat="nature" onclick="openModal(this)" data-index="16">
         <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=85" alt="Aerial travel landscape — mountains and clouds" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">☁ Above the Clouds — Aerial View</span></div>
       </div>
-
       <div class="gallery-item" data-cat="beaches" onclick="openModal(this)" data-index="17">
         <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=600&q=85" alt="Tropical beach paradise — turquoise water" loading="lazy" />
         <div class="gallery-overlay"><span class="gallery-caption">🏝 Tropical Beach Paradise</span></div>
       </div>
-
     </div>
 
     <!-- Video Section -->
@@ -294,29 +267,26 @@
         <p class="section-subtitle">Watch our complete travel showcase and discover amazing destinations around the world.</p>
       </div>
 
-      <!-- ===== AURORA OFFICIAL VIDEO (now a YouTube embed) ===== -->
+      <!-- ===== AURORA OFFICIAL VIDEO (YouTube iframe) ===== -->
       <div style="margin-bottom:32px">
         <h3 style="margin-bottom:14px;font-size:1.1rem">Aurora Travels — Official Destination Video</h3>
-
         <div class="aurora-video-container">
           <iframe 
-            src="https://www.youtube.com/embed/QGmZ1rsKJ9c" 
+            src="https://www.youtube.com/embed/Vx3AS3DzTno" 
             title="Aurora Travels Official Reel" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
             allowfullscreen 
             loading="lazy">
           </iframe>
         </div>
-
         <p style="text-align:center;color:var(--text-light);font-size:0.82rem;margin-top:10px">
           <em>Aurora Travels — "Begin Your Journey"</em> &nbsp;|&nbsp;
           <sup>HD</sup> 2026 Official Reel
         </p>
       </div>
 
-      <!-- YouTube Video Grid (order: Japan first, Maldives second) -->
+      <!-- Japan & Maldives Videos (correct embeds) -->
       <div class="video-grid">
-        <!-- Japan -->
         <div>
           <div class="video-wrap">
             <iframe 
@@ -332,8 +302,6 @@
             <p>A cinematic journey through Tokyo, Kyoto, and Mount Fuji</p>
           </div>
         </div>
-
-        <!-- Maldives -->
         <div>
           <div class="video-wrap">
             <iframe 
@@ -392,6 +360,7 @@
 </footer>
 
 <script>
+  // (all JavaScript remains the same as before – loading, theme, modal, filter, clock)
   window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('loading-screen');if(l)l.classList.add('hidden');},2200);});
   var isDark=localStorage.getItem('aurora-theme')==='dark';
   var themeBtn=document.getElementById('themeToggle');
@@ -405,10 +374,8 @@
   function updateClock(){var n=new Date();var h=String(n.getHours()).padStart(2,'0');var m=String(n.getMinutes()).padStart(2,'0');var s=String(n.getSeconds()).padStart(2,'0');var t=document.getElementById('clockTime');var d=document.getElementById('clockDate');var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];var months=['January','February','March','April','May','June','July','August','September','October','November','December'];if(t)t.textContent=h+':'+m+':'+s;if(d)d.textContent=days[n.getDay()]+', '+months[n.getMonth()]+' '+n.getDate()+', '+n.getFullYear();}
   updateClock();setInterval(updateClock,1000);
 
-  // ---- Image Modal ----
   var allImages = [];
   var currentIndex = 0;
-
   function buildImageList() {
     allImages = [];
     var items = document.querySelectorAll('#galleryGrid .gallery-item:not([style*="none"])');
@@ -418,7 +385,6 @@
       allImages.push({ src: img.src, alt: img.alt, cap: cap ? cap.textContent : '' });
     });
   }
-
   function openModal(el) {
     buildImageList();
     var img = el.querySelector('img');
@@ -430,7 +396,6 @@
     document.getElementById('imgModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-
   function showModalImage() {
     var mi = document.getElementById('modalImg');
     var mc = document.getElementById('modalCounter');
@@ -440,7 +405,6 @@
       mc.textContent = (currentIndex + 1) + ' / ' + allImages.length + '  —  ' + allImages[currentIndex].cap;
     }
   }
-
   function closeModal(e) {
     if (e.target === document.getElementById('imgModal')) closeModalBtn();
   }
@@ -458,7 +422,6 @@
     currentIndex = (currentIndex + 1) % allImages.length;
     showModalImage();
   }
-
   document.addEventListener('keydown', function(e) {
     var modal = document.getElementById('imgModal');
     if (!modal.classList.contains('open')) return;
@@ -466,8 +429,6 @@
     if (e.key === 'ArrowLeft') prevImg(e);
     if (e.key === 'ArrowRight') nextImg(e);
   });
-
-  // ---- Gallery Filter ----
   function filterGallery(btn, cat) {
     document.querySelectorAll('.g-tab').forEach(function(b){b.classList.remove('active');});
     btn.classList.add('active');
