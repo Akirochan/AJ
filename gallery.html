@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,14 +7,45 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     /* Internal CSS — Gallery Page */
-    .gallery-hero {
-      background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #0EA5E9 100%);
-      padding: 72px 0 56px; color: #fff; position: relative; overflow: hidden;
+    /* --- Original Hero (from first screenshot) --- */
+    .hero {
+      padding: 60px 40px 40px 40px;
+      text-align: center;
+      background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
     }
-    .gallery-hero::after {
-      content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 60px;
-      background: var(--bg); clip-path: ellipse(55% 100% at 50% 100%);
+    .hero .brand {
+      font-size: 14px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #2b5a8c;
+      font-weight: 600;
+      margin-bottom: 8px;
     }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #0b1a2e;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 18px;
+      color: #4a5a72;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Dark mode adjustments for hero */
+    body.dark .hero {
+      background: #0f172a;
+      border-bottom-color: #1e293b;
+    }
+    body.dark .hero .brand { color: #60a5fa; }
+    body.dark .hero h1 { color: #f1f5f9; }
+    body.dark .hero p { color: #94a3b8; }
+
     .gallery-tabs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 36px; }
     .g-tab {
       padding: 8px 20px; border-radius: 99px; border: 2px solid var(--glass-border);
@@ -48,7 +79,7 @@
 
     /* --- Force white text in dark mode for video labels --- */
     body.dark .video-label {
-      background: #1e293b; /* darker card background for dark theme */
+      background: #1e293b;
       border-color: #334155;
     }
     body.dark .video-label h4 {
@@ -56,6 +87,24 @@
     }
     body.dark .video-label p {
       color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    /* Aurora featured video (the new YouTube embed) */
+    .aurora-video-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+    .aurora-video-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
     }
 
     /* Modal nav arrows */
@@ -73,6 +122,8 @@
     /* responsive fix for video grid */
     @media (max-width: 600px) {
       .video-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 32px; }
+      .hero { padding: 40px 20px; }
     }
   </style>
 </head>
@@ -116,28 +167,22 @@
   </div>
 </nav>
 
-<!-- Gallery Hero -->
-<section class="gallery-hero">
-  <div class="container" style="position:relative;z-index:2">
-    <div class="breadcrumb" style="color:rgba(255,255,255,0.7)">
-      <a href="index.html" style="color:rgba(255,255,255,0.9)">Home</a>
-      <span>/</span><span style="color:#fff">Gallery</span>
-    </div>
-    <h1 style="font-size:clamp(2.2rem,5vw,3.2rem);font-weight:900;margin:14px 0 12px">
-      Travel <span style="color:#67E8F9">Gallery</span>
-    </h1>
-    <p style="opacity:0.85;max-width:540px;font-size:1.05rem">
-      A curated collection of breathtaking moments captured across our favourite destinations worldwide.
-      Click any photo to view it in full size.
-    </p>
-  </div>
-</section>
+<!-- ===== ORIGINAL HERO (Aurora Travels) ===== -->
+<div class="hero">
+  <div class="brand">✦ Aurora Travels</div>
+  <h1>Experience It Through Video</h1>
+  <p>
+    Watch our travel videos and get inspired for your next adventure
+    with Aurora Travels
+  </p>
+</div>
 
+<!-- Gallery content -->
 <section class="section">
   <div class="container">
 
     <!-- Tabs -->
-    <div class="gallery-tabs">
+    <div class="gallery-tabs" style="margin-top:40px;">
       <button class="g-tab active" onclick="filterGallery(this,'all')">🌍 All Photos</button>
       <button class="g-tab" onclick="filterGallery(this,'asia')">🌏 Asia</button>
       <button class="g-tab" onclick="filterGallery(this,'europe')">🏰 Europe</button>
@@ -244,28 +289,34 @@
     <!-- Video Section -->
     <div style="margin-top:72px" class="fade-in">
       <div class="section-header">
-        <div class="section-tag">🎥 Travel Videos</div>
-        <h2 class="section-title">Experience It Through <span>Video</span></h2>
-        <p class="section-subtitle">Watch our travel videos and get inspired for your next adventure with Aurora Travels</p>
+        <div class="section-tag">🎥 Featured Travel Videos</div>
+        <h2 class="section-title">Experience Our <span>Journey</span></h2>
+        <p class="section-subtitle">Watch our complete travel showcase and discover amazing destinations around the world.</p>
       </div>
 
-      <!-- HTML5 Video (with fallback) -->
+      <!-- ===== AURORA OFFICIAL VIDEO (now a YouTube embed) ===== -->
       <div style="margin-bottom:32px">
         <h3 style="margin-bottom:14px;font-size:1.1rem">Aurora Travels — Official Destination Video</h3>
-        <video controls style="width:100%;max-width:800px;border-radius:var(--radius);box-shadow:var(--shadow);display:block;margin:0 auto"
-          poster="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80">
-          <source src="https://www.youtube.com/embed/QGmZ1rsKJ9c" type="video/mp4" />
-          <p>Your browser does not support the video element. <a href="Aurora.mp4">Download the video</a>.</p>
-        </video>
+
+        <div class="aurora-video-container">
+          <iframe 
+            src="https://www.youtube.com/embed/QGmZ1rsKJ9c" 
+            title="Aurora Travels Official Reel" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen 
+            loading="lazy">
+          </iframe>
+        </div>
+
         <p style="text-align:center;color:var(--text-light);font-size:0.82rem;margin-top:10px">
           <em>Aurora Travels — "Begin Your Journey"</em> &nbsp;|&nbsp;
           <sup>HD</sup> 2026 Official Reel
         </p>
       </div>
 
-      <!-- YouTube Video Grid (FIXED: swapped embeds & white text in dark mode) -->
+      <!-- YouTube Video Grid (order: Japan first, Maldives second) -->
       <div class="video-grid">
-        <!-- Japan – correct embed: jTOfOew316s -->
+        <!-- Japan -->
         <div>
           <div class="video-wrap">
             <iframe 
@@ -282,7 +333,7 @@
           </div>
         </div>
 
-        <!-- Maldives – correct embed: Ppv-H-_xa9E -->
+        <!-- Maldives -->
         <div>
           <div class="video-wrap">
             <iframe 
@@ -428,4 +479,4 @@
   }
 </script>
 </body>
-</html>   
+</html>
