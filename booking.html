@@ -112,7 +112,7 @@
       <div>
         <div class="booking-form-card fade-in">
           <!-- Confirmation (hidden until submit) -->
-          <div id="booking-confirm">
+          <div id="booking-confirm" style="display:none;">
             <div class="confirm-icon">🎉</div>
             <h2>Booking Request Received!</h2>
             <p style="color:var(--text-light);margin-bottom:24px">
@@ -208,7 +208,7 @@
               </div>
               <div class="form-group">
                 <label for="email">Email Address *</label>
-                <input type="useremail" class="form-control" id="useremail" placeholder="you@example.com" />
+                <input type="email" class="form-control" id="useremail" placeholder="you@example.com" />
                 <span class="form-error" id="err-useremail">Please enter a valid email address.</span>
               </div>
               <div class="form-group">
@@ -237,7 +237,7 @@
               </div>
             </div>
 
-            <!-- Inline CSS example -->
+            <!-- Inline Info -->
             <div style="background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(6,182,212,0.06));border:1px solid rgba(37,99,235,0.15);border-radius:var(--radius-sm);padding:18px 20px;margin-bottom:28px;font-size:0.88rem;color:var(--text-light)">
               <strong style="color:var(--text)">🛡 Safe &amp; Secure Booking:</strong>
               Your personal information is protected with <mark>256-bit SSL encryption</mark>.
@@ -473,7 +473,7 @@
       {id:'departureDate',  err:'err-departureDate'},
       {id:'guests',         err:'err-guests'},
       {id:'fullName',       err:'err-fullName'},
-      {id:'useremail',          err:'err-useremail'},
+      {id:'useremail',      err:'err-useremail'},
       {id:'phone',          err:'err-phone'},
       {id:'country',        err:'err-country'}
     ];
@@ -516,6 +516,16 @@
       specialRequests: document.getElementById('specialRequests').value || 'None'
     };
 
+    // 🔍 Debug: log the email to check
+    console.log('📧 Sending email to:', templateParams.useremail);
+    console.log('📦 Full params:', templateParams);
+
+    // If email is empty, show alert and stop
+    if (!templateParams.useremail || templateParams.useremail.trim() === '') {
+      alert('Error: Email address is missing. Please fill in your email.');
+      return;
+    }
+
     // Disable submit button
     var submitBtn = e.target.querySelector('button[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
@@ -523,11 +533,11 @@
     // Send email using EmailJS – this sends to the user only
     emailjs.send('service_inxk5hy', 'template_h1a0wjy', templateParams)
       .then(function(response) {
-        console.log('Confirmation email sent to user!', response.status, response.text);
+        console.log('✅ Confirmation email sent to user!', response.status, response.text);
         // Show confirmation on page
         document.getElementById('bookingForm').style.display = 'none';
         var confirm = document.getElementById('booking-confirm');
-        confirm.classList.add('show');
+        confirm.style.display = 'block';
         var details = document.getElementById('confirmDetails');
         details.innerHTML =
           '<strong>📍 Destination:</strong> ' + document.getElementById('destination').value + '<br/>' +
@@ -550,7 +560,7 @@
         else if (error.message) errMsg += error.message;
         else errMsg += 'Unknown error – check console (F12) for details.';
         alert(errMsg);
-        console.error('EmailJS error:', error);
+        console.error('❌ EmailJS error:', error);
         if (submitBtn) submitBtn.disabled = false;
         // Form stays visible – user can retry
       });
