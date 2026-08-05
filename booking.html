@@ -118,7 +118,7 @@
             <p style="color:var(--text-light);margin-bottom:24px">
               Thank you for choosing <strong>Aurora Travels</strong>! Your booking request has been submitted successfully.
               Our travel consultant will contact you within <strong>24 hours</strong> to confirm your reservation and
-              arrange payment. Please check your email for a confirmation summary.
+              arrange payment. <strong>Please check your email for the confirmation summary.</strong>
             </p>
             <div class="alert alert-success" id="confirmDetails" style="text-align:left;margin-bottom:24px"></div>
             <a href="index.html" class="btn btn-primary">Back to Home</a>
@@ -208,8 +208,8 @@
               </div>
               <div class="form-group">
                 <label for="email">Email Address *</label>
-                <input type="email" class="form-control" id="email" placeholder="you@example.com" />
-                <span class="form-error" id="err-email">Please enter a valid email address.</span>
+                <input type="useremail" class="form-control" id="useremail" placeholder="you@example.com" />
+                <span class="form-error" id="err-useremail">Please enter a valid email address.</span>
               </div>
               <div class="form-group">
                 <label for="phone">Phone Number *</label>
@@ -396,7 +396,7 @@
   // ---- EmailJS Initialization ----
   (function() {
     emailjs.init({
-      publicKey: "qh5RptHl-lE9cgn2O",   // <-- Updated with your key
+      publicKey: "qh5RptHl-lE9cgn2O",   // Your public key
     });
   })();
 
@@ -463,7 +463,7 @@
     }
   }
 
-  // ---- Submit Booking with EmailJS ----
+  // ---- Submit Booking with EmailJS (auto-reply to user only) ----
   function submitBooking(e) {
     e.preventDefault();
     var valid = true;
@@ -473,7 +473,7 @@
       {id:'departureDate',  err:'err-departureDate'},
       {id:'guests',         err:'err-guests'},
       {id:'fullName',       err:'err-fullName'},
-      {id:'email',          err:'err-email'},
+      {id:'useremail',          err:'err-useremail'},
       {id:'phone',          err:'err-phone'},
       {id:'country',        err:'err-country'}
     ];
@@ -490,10 +490,10 @@
       }
     });
     // Email format check
-    var emailEl = document.getElementById('email');
+    var emailEl = document.getElementById('useremail');
     if (emailEl.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
       emailEl.classList.add('error');
-      document.getElementById('err-email').classList.add('show');
+      document.getElementById('err-useremail').classList.add('show');
       valid = false;
     }
     if (!valid) {
@@ -501,10 +501,10 @@
       return;
     }
 
-    // ---- Prepare parameters matching your EmailJS template ----
+    // ---- Prepare parameters for EmailJS ----
     var templateParams = {
       fullname: document.getElementById('fullName').value,
-      email: document.getElementById('email').value,
+      useremail: document.getElementById('useremail').value,   // <-- Recipient
       destination: document.getElementById('destination').value,
       packageType: document.getElementById('packageType').value,
       departureDate: document.getElementById('departureDate').value,
@@ -520,10 +520,11 @@
     var submitBtn = e.target.querySelector('button[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
 
+    // Send email using EmailJS – this sends to the user only
     emailjs.send('service_inxk5hy', 'template_h1a0wjy', templateParams)
       .then(function(response) {
-        console.log('Booking email sent!', response.status, response.text);
-        // Show confirmation
+        console.log('Confirmation email sent to user!', response.status, response.text);
+        // Show confirmation on page
         document.getElementById('bookingForm').style.display = 'none';
         var confirm = document.getElementById('booking-confirm');
         confirm.classList.add('show');
@@ -533,7 +534,7 @@
           '<strong>🎒 Package:</strong> '     + document.getElementById('packageType').value + '<br/>' +
           '<strong>📅 Departure:</strong> '   + document.getElementById('departureDate').value + '<br/>' +
           '<strong>👤 Name:</strong> '        + document.getElementById('fullName').value + '<br/>' +
-          '<strong>✉ Email:</strong> '        + document.getElementById('email').value;
+          '<strong>✉ Email:</strong> '        + document.getElementById('useremail').value;
         // Update steps
         document.getElementById('step1').classList.remove('active');
         document.getElementById('step1').classList.add('done');
@@ -544,7 +545,6 @@
         if (submitBtn) submitBtn.disabled = false;
       })
       .catch(function(error) {
-        // Show the exact error from EmailJS
         var errMsg = 'EmailJS error:\n';
         if (error.text) errMsg += error.text;
         else if (error.message) errMsg += error.message;
