@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Aurora Travels</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Internal CSS — About Page */
+    .about-hero {
+      background: linear-gradient(135deg, #1E40AF 0%, #0EA5E9 55%, #06B6D4 100%);
+      padding: 80px 0 64px; color: #fff; position: relative; overflow: hidden;
+    }
+    .timeline { position: relative; padding: 0 0 0 40px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 14px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+    .timeline-item { position: relative; margin-bottom: 36px; }
+    .timeline-dot {
+      position: absolute; left: -33px; top: 6px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
+    }
+    .timeline-year {
+      font-size: 0.78rem; font-weight: 800; color: var(--accent); letter-spacing: 1px;
+      text-transform: uppercase; margin-bottom: 4px;
+    }
+    .timeline-item h4 { font-size: 1rem; font-weight: 800; margin-bottom: 6px; }
+    .timeline-item p  { font-size: 0.88rem; color: var(--text-light); line-height: 1.7; }
+
+    .mission-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+    @media (max-width: 768px) { .mission-grid { grid-template-columns: 1fr; } }
+    .mission-card {
+      background: var(--card); border-radius: var(--radius); padding: 32px;
+      text-align: center; box-shadow: var(--shadow); border: 1px solid var(--glass-border);
+      transition: all 0.35s;
+    }
+    .mission-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .mission-icon { font-size: 2.8rem; margin-bottom: 16px; }
+    .mission-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; }
+    .mission-card p  { font-size: 0.9rem; color: var(--text-light); line-height: 1.7; }
+
+    .award-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+    .award-card {
+      background: var(--card); border-radius: var(--radius-sm); padding: 20px; text-align: center;
+      border: 1px solid var(--glass-border); box-shadow: var(--shadow); transition: all 0.3s;
+    }
+    .award-card:hover { transform: translateY(-3px); }
+    .award-year { font-size: 0.75rem; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+    .award-name { font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; }
+    .award-body { font-size: 0.78rem; color: var(--text-light); }
+    .award-trophy { font-size: 1.8rem; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+<div id="loading-screen">
+  <div class="loader-logo">✈ Aurora Travels</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <p class="loader-text">Loading our story…</p>
+</div>
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">✈ Aurora Travels</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="packages.html">Packages</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="booking.html">Book Now</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeToggle">🌙</button>
+      <a href="booking.html" class="btn-nav-cta">Book Now</a>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<section class="about-hero">
+  <div class="container" style="position:relative;z-index:2">
+    <div class="breadcrumb" style="color:rgba(255,255,255,0.7)">
+      <a href="index.html" style="color:rgba(255,255,255,0.9)">Home</a>
+      <span>/</span><span style="color:#fff">About Us</span>
+    </div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.2rem);font-weight:900;margin:14px 0 12px">
+      Our <span style="color:#67E8F9">Story</span>
+    </h1>
+    <p style="opacity:0.85;max-width:580px;font-size:1.05rem">
+      More than a decade of crafting extraordinary travel experiences — discover the people, values, and vision
+      behind Aurora Travels.
+    </p>
+  </div>
+</section>
+
+<!-- ================= COMPANY INTRODUCTION ================= -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="fade-in">
+
+      <div>
+        <div class="section-tag">Our Story</div>
+
+        <h2 class="section-title" style="font-size:2.2rem;margin-top:12px">
+          Born from a <span>Passion for Travel</span>
+        </h2>
+
+        <p style="color:var(--text-light);line-height:1.8;margin-bottom:16px">
+          <strong>Aurora Travels</strong> was founded in 2012 by <mark>travel enthusiasts</mark> who believed that every person deserves to experience the world at its most magnificent. What began as a small boutique travel consultancy in Makati City has grown into one of the Philippines' most trusted and award-winning luxury travel agencies.
+        </p>
+
+        <p style="color:var(--text-light);line-height:1.8;margin-bottom:16px">
+          Our name is inspired by the <em>Aurora Borealis</em>—the Northern Lights—one of Earth's most awe-inspiring natural phenomena. Just as the aurora illuminates the sky with extraordinary color and wonder, we illuminate our clients' lives with <strong>transformative travel experiences</strong> that leave them breathless.
+        </p>
+
+        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">
+          Today, we are a team of over <u>50 dedicated travel professionals</u> serving clients across Southeast Asia, with partnerships in more than 85 countries worldwide. Our commitment to excellence has never wavered since our very first booking.
+        </p>
+
+        <div style="display:flex;gap:24px;flex-wrap:wrap">
+          <div style="text-align:center">
+            <div style="font-size:2rem;font-weight:900;color:var(--primary)">15,000+</div>
+            <div style="font-size:0.85rem;color:var(--text-light)">Happy Travelers</div>
+          </div>
+
+          <div style="text-align:center">
+            <div style="font-size:2rem;font-weight:900;color:var(--primary)">85+</div>
+            <div style="font-size:0.85rem;color:var(--text-light)">Countries Covered</div>
+          </div>
+
+          <div style="text-align:center">
+            <div style="font-size:2rem;font-weight:900;color:var(--primary)">12</div>
+            <div style="font-size:0.85rem;color:var(--text-light)">Years of Excellence</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <a href="gallery.html">
+          <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80"
+               alt="Aurora Travels"
+               style="border-radius:var(--radius);box-shadow:var(--shadow-lg);width:100%;height:420px;object-fit:cover;cursor:pointer">
+        </a>
+
+        <p style="text-align:center;font-size:0.8rem;color:var(--text-light);margin-top:10px">
+          <em>The Aurora Travels team exploring the world, so you can explore it too.</em>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+<br>
+  <section class="section" style="margin-top:100px;">
+  <div class="container fade-in" style="max-width:900px;">
+
+    <div class="section-tag">About the Developer</div>
+
+    <h2 class="section-title" style="font-size:2.2rem;margin-top:12px">
+      Meet the <span>Student Behind Aurora Travels</span>
+    </h2>
+
+    <p style="color:var(--text-light);line-height:1.8;margin-bottom:16px">
+      Hello! I'm <strong>Adsmer Baldera</strong>, a <strong>15-year-old Grade 10 Osmeña student</strong> from
+      <strong>Palawan National School (PNS)</strong>. This website, <strong>Aurora Travels</strong>, is my ICT project created as part of our Grade 10 HTML lessons under the guidance of <strong>Ma'am Grace Parangue</strong>.
+    </p>
+
+    <p style="color:var(--text-light);line-height:1.8;margin-bottom:16px">
+      Developing this website has been one of the most challenging and rewarding experiences of my school life. For almost <strong>three months</strong>, I dedicated my time to planning the design, writing HTML, improving layouts with CSS, fixing errors, and refining every page until it became the project it is today. Every challenge became another lesson that strengthened my patience, perseverance, and determination.
+    </p>
+
+    <p style="color:var(--text-light);line-height:1.8;margin-bottom:16px">
+      Throughout our HTML lessons, I learned how to structure web pages using semantic HTML, create responsive layouts with CSS, organize content effectively, and build a professional-looking website from scratch. This experience also taught me creativity, discipline, critical thinking, and the importance of never giving up when facing difficult problems.
+    </p>
+
+    <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px">
+      Aurora Travels is more than just an ICT project—it represents my growth as a student and the knowledge I gained throughout Grade 10. I sincerely thank <strong>Ma'am Grace Parangue</strong> for teaching us the fundamentals of web development and inspiring us to continue learning. I hope this project reflects my dedication, hard work, and passion for creating something meaningful.
+    </p>
+
+    <div style="display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:30px;">
+
+      <div style="text-align:center">
+        <div style="font-size:2rem;font-weight:900;color:var(--primary)">15</div>
+        <div style="font-size:0.85rem;color:var(--text-light)">Years Old</div>
+      </div>
+
+      <div style="text-align:center">
+        <div style="font-size:2rem;font-weight:900;color:var(--primary)">3</div>
+        <div style="font-size:0.85rem;color:var(--text-light)">Months of Development</div>
+      </div>
+
+      <div style="text-align:center">
+        <div style="font-size:2rem;font-weight:900;color:var(--primary)">Grade 10 Osmeña</div>
+        <div style="font-size:0.85rem;color:var(--text-light)">Palawan National School</div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Mission, Vision, Values -->
+<section class="section" style="background:linear-gradient(135deg,rgba(37,99,235,0.03),rgba(6,182,212,0.03))">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">🌟 Our Purpose</div>
+      <h2 class="section-title">Mission, Vision <span>&amp; Values</span></h2>
+      <p class="section-subtitle">The principles that guide every journey we craft</p>
+    </div>
+    <div class="mission-grid">
+      <div class="mission-card fade-in">
+        <div class="mission-icon">🎯</div>
+        <h3>Our Mission</h3>
+        <p>
+          To deliver extraordinary, <strong>personalized travel experiences</strong> that exceed every expectation —
+          combining deep destination expertise, premium service, and genuine care for our clients' wellbeing
+          throughout every journey.
+        </p>
+      </div>
+      <div class="mission-card fade-in">
+        <div class="mission-icon">🔭</div>
+        <h3>Our Vision</h3>
+        <p>
+          To be the <em>most trusted luxury travel partner</em> in Southeast Asia, recognized for transforming
+          travel dreams into unforgettable realities — one extraordinary journey at a time — while promoting
+          sustainable and responsible tourism worldwide.
+        </p>
+      </div>
+      <div class="mission-card fade-in">
+        <div class="mission-icon">💎</div>
+        <h3>Our Values</h3>
+        <p>
+          <mark>Excellence</mark> in service, <strong>integrity</strong> in every interaction, deep <em>passion</em> for
+          discovery, unwavering <u>commitment</u> to our clients, and a genuine love for the cultures, people,
+          and destinations that make our world so wonderfully diverse.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Company History Timeline -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start">
+      <div class="fade-in">
+        <div class="section-tag">📅 Our Journey</div>
+        <h2 class="section-title" style="font-size:2rem;margin-top:12px">
+          A Decade of <span>Excellence</span>
+        </h2>
+        <p style="color:var(--text-light);margin-bottom:36px;line-height:1.8">
+          From a two-person startup with a big dream to an internationally recognized luxury travel agency —
+          here is how the Aurora Travels story unfolded year by year.
+        </p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2012 — Foundation</div>
+            <h4>Aurora Travels is Born</h4>
+            <p>Founded by CEO Maria Dela Cruz and COO Jose Reyes in Makati City with a team of 5 travel consultants and a vision to redefine Philippine luxury travel.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2014 — First Award</div>
+            <h4>DOT Excellence Award</h4>
+            <p>Received the Department of Tourism Excellence Award for Outstanding Service, recognizing Aurora Travels as a leader in client satisfaction and tour quality.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2016 — Expansion</div>
+            <h4>Regional Office Opens</h4>
+            <p>Expanded operations with new offices in Cebu City and Davao, growing the team to 25 consultants and serving over 3,000 clients annually.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2018 — International</div>
+            <h4>IATA Accreditation</h4>
+            <p>Achieved full IATA accreditation, enabling direct ticketing partnerships with all major international airlines and significantly expanding our global reach.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2020 — Resilience</div>
+            <h4>Navigating the Pandemic</h4>
+            <p>Despite unprecedented global challenges, Aurora Travels pivoted to virtual travel planning and emerged stronger, launching enhanced digital services and flexible booking policies.</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2024 — Present</div>
+            <h4>Industry Leader</h4>
+            <p>Celebrating 12 years and 15,000+ satisfied travelers, Aurora Travels is now the Philippines' premier luxury travel agency with 48 industry awards and a 98% satisfaction rate.</p>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in" style="padding-top:80px">
+        <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=700&q=80"
+          alt="Aurora Travels — celebrating 12 years of extraordinary journeys"
+          style="border-radius:var(--radius);box-shadow:var(--shadow-lg);width:100%;height:360px;object-fit:cover;margin-bottom:28px" />
+        <!-- Why Choose Aurora — Unordered List -->
+        <div style="background:var(--card);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);border:1px solid var(--glass-border)">
+          <h3 style="font-size:1.05rem;margin-bottom:16px">Why Clients Choose Aurora Travels</h3>
+          <ul style="list-style:none">
+            <li style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--glass-border);font-size:0.9rem;color:var(--text-light)">🌟 <span><strong style="color:var(--text)">Deep expertise</strong> — average consultant has 8+ years of travel experience</span></li>
+            <li style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--glass-border);font-size:0.9rem;color:var(--text-light)">🤝 <span><strong style="color:var(--text)">Personal service</strong> — dedicated consultant for each client's journey</span></li>
+            <li style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--glass-border);font-size:0.9rem;color:var(--text-light)">🔒 <span><strong style="color:var(--text)">Trusted partnerships</strong> — 500+ verified hotels, airlines, and tour operators</span></li>
+            <li style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--glass-border);font-size:0.9rem;color:var(--text-light)">📱 <span><strong style="color:var(--text)">24/7 support</strong> — always reachable during your trip via phone or WhatsApp</span></li>
+            <li style="display:flex;gap:10px;padding:8px 0;font-size:0.9rem;color:var(--text-light)">💰 <span><strong style="color:var(--text)">Transparent pricing</strong> — no hidden charges, ever</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Team -->
+<section class="section" style="background:linear-gradient(135deg,rgba(37,99,235,0.03),rgba(6,182,212,0.03))">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">👥 Our Team (NOTE! : FAKE INFOS/AND PHOTOS CREDITS TO THE RIHGHTFULL OWNER)</div>
+      <h2 class="section-title">Meet the <span>Experts</span></h2>
+      <p class="section-subtitle">Passionate travel professionals dedicated to crafting your perfect journey</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-in">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Maria Dela Cruz — CEO" class="team-img" />
+        <div class="team-body">
+          <div class="team-name">Maria Dela Cruz</div>
+          <div class="team-role">Chief Executive Officer</div>
+          <p class="team-bio">With 15 years in luxury travel, Maria has personally visited 72 countries and built Aurora Travels from a dream into the Philippines' premier travel brand.</p>
+        </div>
+      </div>
+      <div class="team-card fade-in">
+        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80" alt="Jose Reyes — COO" class="team-img" />
+        <div class="team-body">
+          <div class="team-name">Jose Reyes</div>
+          <div class="team-role">Chief Operations Officer</div>
+          <p class="team-bio">Jose oversees all operational aspects of Aurora Travels, ensuring every itinerary is executed flawlessly. Former head of operations at a Singaporean travel group.</p>
+        </div>
+      </div>
+      <div class="team-card fade-in">
+        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80" alt="Ana Santos — Head of Asia" class="team-img" />
+        <div class="team-body">
+          <div class="team-name">Ana Santos</div>
+          <div class="team-role">Head of Asia Destinations</div>
+          <p class="team-bio">A Japan and Southeast Asia specialist who speaks Japanese and Korean fluently. Ana crafts our most authentic Asian immersion experiences.</p>
+        </div>
+      </div>
+      <div class="team-card fade-in">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Carlos Mendez — Head of Europe" class="team-img" />
+        <div class="team-body">
+          <div class="team-name">Carlos Mendez</div>
+          <div class="team-role">Head of European Travel</div>
+          <p class="team-bio">Educated in Paris and Rome, Carlos brings unparalleled depth to our European itineraries. Specialist in luxury rail travel and private wine tours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Achievements / Awards -->
+<section class="section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">🏆 Recognition</div>
+      <h2 class="section-title">Our <span>Awards &amp; Achievements</span></h2>
+      <p class="section-subtitle">Industry recognition for over a decade of excellence in travel service</p>
+    </div>
+    <div class="award-grid">
+      <div class="award-card fade-in"><div class="award-trophy">🥇</div><div class="award-year">2024</div><div class="award-name">Best Luxury Travel Agency</div><div class="award-body">Philippine Travel Exchange</div></div>
+      <div class="award-card fade-in"><div class="award-trophy">🏅</div><div class="award-year">2024</div><div class="award-name">Top Employer of the Year</div><div class="award-body">Philippine HR Association</div></div>
+      <div class="award-card fade-in"><div class="award-trophy">⭐</div><div class="award-year">2023</div><div class="award-name">5-Star Customer Service</div><div class="award-body">Asia Travel Awards</div></div>
+      <div class="award-card fade-in"><div class="award-trophy">🌐</div><div class="award-year">2023</div><div class="award-name">Best Asia Package Provider</div><div class="award-body">International Travel Expo</div></div>
+      <div class="award-card fade-in"><div class="award-trophy">🌿</div><div class="award-year">2022</div><div class="award-name">Sustainable Travel Champion</div><div class="award-body">ASEAN Tourism Forum</div></div>
+      <div class="award-card fade-in"><div class="award-trophy">💎</div><div class="award-year">2021</div><div class="award-name">Diamond Agency Status</div><div class="award-body">Singapore Airlines Partner</div></div>
+      <div class="award-card fade-in"><div class="award-trophy">📱</div><div class="award-year">2020</div><div class="award-name">Best Digital Innovation</div><div class="award-body">Philippine Tourism Congress</div></div>
+      <div class="award-card fade-in"><div class="award-trophy">🤝</div><div class="award-year">2018</div><div class="award-name">IATA Premier Partner</div><div class="award-body">International Air Transport Assoc.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section style="background:linear-gradient(135deg,#1E40AF,#0EA5E9,#06B6D4);padding:80px 0;text-align:center;color:#fff">
+  <div class="container fade-in">
+    <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin-bottom:16px">
+      Ready to Start Your Journey?
+    </h2>
+    <p style="opacity:0.9;max-width:520px;margin:0 auto 32px;font-size:1.05rem">
+      Join over 15,000 satisfied travelers who have trusted Aurora Travels with their most precious moments.
+    </p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a href="booking.html" class="btn btn-white">✈ Book Your Trip Now</a>
+      <a href="contact.html" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,0.4)">💬 Talk to a Consultant</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">✈ Aurora Travels</div>
+        <p>Crafting extraordinary journeys and lifelong memories since 2012. Philippines' most trusted luxury travel agency.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="https://www.facebook.com" target="_blank">f</a>
+          <a class="social-btn" href="https://www.instagram.com" target="_blank">in</a>
+          <a class="social-btn" href="https://www.twitter.com" target="_blank">𝕏</a>
+          <a class="social-btn" href="https://www.youtube.com" target="_blank">▶</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>About</h4><ul>
+        <li><a href="about.html">Our Story</a></li><li><a href="about.html">Meet the Team</a></li>
+        <li><a href="about.html">Awards</a></li><li><a href="about.html">Sustainability</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Explore</h4><ul>
+        <li><a href="destinations.html">Destinations</a></li>
+        <li><a href="packages.html">Packages</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="booking.html">Book Now</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Support</h4><ul>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html">FAQs</a></li>
+        <li><a href="booking.html">Booking Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Aurora Travels. All rights reserved.</p>
+      <div class="clock-widget"><div class="clock-time" id="clockTime">00:00:00</div><div class="clock-date" id="clockDate">—</div></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('loading-screen');if(l)l.classList.add('hidden');},2200);});
+  var isDark=localStorage.getItem('aurora-theme')==='dark';
+  var themeBtn=document.getElementById('themeToggle');
+  if(isDark){document.body.classList.add('dark');themeBtn.textContent='☀️';}
+  themeBtn.addEventListener('click',function(){document.body.classList.toggle('dark');isDark=document.body.classList.contains('dark');themeBtn.textContent=isDark?'☀️':'🌙';localStorage.setItem('aurora-theme',isDark?'dark':'light');});
+  document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('mobile-open');});
+  window.addEventListener('scroll',function(){var b=document.getElementById('scroll-top');if(b){if(window.scrollY>400)b.classList.add('visible');else b.classList.remove('visible');}});
+  var fadeEls=document.querySelectorAll('.fade-in');
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
+  fadeEls.forEach(function(el){obs.observe(el);});
+  function updateClock(){var n=new Date();var h=String(n.getHours()).padStart(2,'0');var m=String(n.getMinutes()).padStart(2,'0');var s=String(n.getSeconds()).padStart(2,'0');var t=document.getElementById('clockTime');var d=document.getElementById('clockDate');var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];var months=['January','February','March','April','May','June','July','August','September','October','November','December'];if(t)t.textContent=h+':'+m+':'+s;if(d)d.textContent=days[n.getDay()]+', '+months[n.getMonth()]+' '+n.getDate()+', '+n.getFullYear();}
+  updateClock();setInterval(updateClock,1000);
+</script>
+</body>
+</html>
