@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Now — Aurora Travels</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Internal CSS — Booking Page */
+    .booking-hero {
+      background: linear-gradient(135deg, #1E40AF 0%, #0EA5E9 60%, #06B6D4 100%);
+      padding: 72px 0 56px; color: #fff; position: relative; overflow: hidden;
+    }
+    .policy-section {
+      background: var(--bg); padding: 40px 0;
+    }
+    .policy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+    .policy-card {
+      background: var(--card); border-radius: var(--radius-sm); padding: 22px 20px;
+      border: 1px solid var(--glass-border); box-shadow: var(--shadow);
+    }
+    .policy-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: var(--primary); }
+    .policy-card p  { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+    .booking-form-card {
+      background: var(--card); border-radius: var(--radius); padding: 36px;
+      box-shadow: var(--shadow-lg); border: 1px solid var(--glass-border);
+    }
+    .form-section-title { font-size: 0.9rem; font-weight: 800; color: var(--primary); text-transform: uppercase;
+      letter-spacing: 1.5px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid rgba(37,99,235,0.15); }
+    .steps { display: flex; gap: 0; margin-bottom: 40px; }
+    .step { flex: 1; text-align: center; position: relative; }
+    .step::after { content: ''; position: absolute; top: 18px; left: 50%; width: 100%; height: 2px;
+      background: var(--glass-border); z-index: 0; }
+    .step:last-child::after { display: none; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center;
+      justify-content: center; font-size: 0.85rem; font-weight: 800; position: relative; z-index: 1;
+      background: var(--glass-border); color: var(--text-light); }
+    .step.active .step-num { background: linear-gradient(135deg,var(--primary),var(--accent)); color: #fff; }
+    .step.done .step-num { background: #10B981; color: #fff; }
+    .step-label { font-size: 0.75rem; color: var(--text-light); margin-top: 6px; display: block; }
+    .step.active .step-label { color: var(--primary); font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<div id="loading-screen">
+  <div class="loader-logo">✈ Aurora Travels</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <p class="loader-text">Loading booking form…</p>
+</div>
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">✈ Aurora Travels</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="packages.html">Packages</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="booking.html" class="active">Book Now</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeToggle">🌙</button>
+      <a href="booking.html" class="btn-nav-cta">Book Now</a>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<section class="booking-hero">
+  <div class="container">
+    <div class="breadcrumb" style="color:rgba(255,255,255,0.7)">
+      <a href="index.html" style="color:rgba(255,255,255,0.9)">Home</a>
+      <span>/</span><span style="color:#fff">Book Now</span>
+    </div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.2rem);font-weight:900;margin:14px 0 12px">
+      Book Your <span style="color:#67E8F9">Dream Journey</span>
+    </h1>
+    <p style="opacity:0.85;max-width:560px;font-size:1.05rem">
+      Fill in the form below and our travel consultants will confirm your reservation within <strong>24 hours</strong>.
+      No hidden fees. Best price guaranteed.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Progress Steps -->
+    <div class="steps fade-in" style="max-width:600px;margin:0 auto 48px">
+      <div class="step active" id="step1">
+        <div class="step-num">1</div>
+        <span class="step-label">Travel Details</span>
+      </div>
+      <div class="step" id="step2">
+        <div class="step-num">2</div>
+        <span class="step-label">Personal Info</span>
+      </div>
+      <div class="step" id="step3">
+        <div class="step-num">3</div>
+        <span class="step-label">Confirmation</span>
+      </div>
+    </div>
+
+    <div class="booking-layout">
+
+      <!-- Booking Form -->
+      <div>
+        <div class="booking-form-card fade-in">
+          <!-- Confirmation (hidden until submit) -->
+          <div id="booking-confirm" style="display:none;">
+            <div class="confirm-icon">🎉</div>
+            <h2>Booking Request Received!</h2>
+            <p style="color:var(--text-light);margin-bottom:24px">
+              Thank you for choosing <strong>Aurora Travels</strong>! Your booking request has been submitted successfully.
+              Our travel consultant will contact you within <strong>24 hours</strong> to confirm your reservation and
+              arrange payment. <strong>Please check your email for the confirmation summary.</strong>
+            </p>
+            <div class="alert alert-success" id="confirmDetails" style="text-align:left;margin-bottom:24px"></div>
+            <a href="index.html" class="btn btn-primary">Back to Home</a>
+          </div>
+
+          <!-- The Actual Form -->
+          <form id="bookingForm" onsubmit="submitBooking(event)">
+
+            <!-- Section 1: Travel Details -->
+            <div class="form-section-title">✈ Travel Details</div>
+            <div class="form-grid" style="margin-bottom:28px">
+              <div class="form-group">
+                <label for="destination">Destination *</label>
+                <select class="form-control" id="destination" onchange="updateSummary()">
+                  <option value="">— Select Destination —</option>
+                  <option value="Japan">🇯🇵 Japan — ₱85,000</option>
+                  <option value="South Korea">🇰🇷 South Korea — ₱72,000</option>
+                  <option value="Singapore">🇸🇬 Singapore — ₱60,000</option>
+                  <option value="Thailand">🇹🇭 Thailand — ₱55,000</option>
+                  <option value="Philippines">🇵🇭 Philippines — ₱35,000</option>
+                  <option value="Maldives">🇲🇻 Maldives — ₱180,000</option>
+                  <option value="Switzerland">🇨🇭 Switzerland — ₱120,000</option>
+                  <option value="France">🇫🇷 France — ₱130,000</option>
+                  <option value="Italy">🇮🇹 Italy — ₱125,000</option>
+                  <option value="Dubai (UAE)">🇦🇪 Dubai (UAE) — ₱95,000</option>
+                  <option value="Australia">🇦🇺 Australia — ₱150,000</option>
+                  <option value="Canada">🇨🇦 Canada — ₱155,000</option>
+                  <option value="Norway">🇳🇴 Norway — ₱165,000</option>
+                  <option value="Iceland">🇮🇸 Iceland — ₱175,000</option>
+                  <option value="New Zealand">🇳🇿 New Zealand — ₱160,000</option>
+                </select>
+                <span class="form-error" id="err-destination">Please select a destination.</span>
+              </div>
+              <div class="form-group">
+                <label for="packageType">Package Type *</label>
+                <select class="form-control" id="packageType" onchange="updateSummary()">
+                  <option value="">— Select Package —</option>
+                  <option value="Luxury Escape">💎 Luxury Escape</option>
+                  <option value="Adventure Tour">🏔 Adventure Tour</option>
+                  <option value="Family Package">👨‍👩‍👧 Family Package</option>
+                  <option value="Romantic Getaway">🌹 Romantic Getaway</option>
+                  <option value="Cultural Immersion">🏛 Cultural Immersion</option>
+                  <option value="Custom Itinerary">✏ Custom Itinerary</option>
+                </select>
+                <span class="form-error" id="err-packageType">Please select a package type.</span>
+              </div>
+              <div class="form-group">
+                <label for="departureDate">Departure Date *</label>
+                <input type="date" class="form-control" id="departureDate" onchange="updateSummary()" />
+                <span class="form-error" id="err-departureDate">Please select a departure date.</span>
+              </div>
+              <div class="form-group">
+                <label for="returnDate">Return Date</label>
+                <input type="date" class="form-control" id="returnDate" onchange="updateSummary()" />
+              </div>
+              <div class="form-group">
+                <label for="guests">Number of Guests *</label>
+                <select class="form-control" id="guests" onchange="updateSummary()">
+                  <option value="">— Select —</option>
+                  <option value="1">1 Guest</option>
+                  <option value="2">2 Guests</option>
+                  <option value="3">3 Guests</option>
+                  <option value="4">4 Guests</option>
+                  <option value="5">5 Guests</option>
+                  <option value="6+">6+ Guests (group)</option>
+                </select>
+                <span class="form-error" id="err-guests">Please select number of guests.</span>
+              </div>
+              <div class="form-group">
+                <label for="roomType">Room Preference</label>
+                <select class="form-control" id="roomType">
+                  <option value="Standard">Standard Room</option>
+                  <option value="Deluxe">Deluxe Room</option>
+                  <option value="Suite">Suite</option>
+                  <option value="Villa">Private Villa</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Section 2: Personal Information -->
+            <div class="form-section-title">👤 Personal Information</div>
+            <div class="form-grid" style="margin-bottom:28px">
+              <div class="form-group">
+                <label for="fullName">Full Name *</label>
+                <input type="text" class="form-control" id="fullName" placeholder="e.g. Maria Clara Santos" />
+                <span class="form-error" id="err-fullName">Please enter your full name.</span>
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" class="form-control" id="useremail" placeholder="you@example.com" />
+                <span class="form-error" id="err-useremail">Please enter a valid email address.</span>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" class="form-control" id="phone" placeholder="+63 9XX XXX XXXX" />
+                <span class="form-error" id="err-phone">Please enter your phone number.</span>
+              </div>
+              <div class="form-group">
+                <label for="country">Country of Residence *</label>
+                <select class="form-control" id="country">
+                  <option value="">— Select Country —</option>
+                  <option value="Philippines" selected>Philippines</option>
+                  <option value="USA">United States</option>
+                  <option value="UK">United Kingdom</option>
+                  <option value="Canada">Canada</option>
+                  <option value="Australia">Australia</option>
+                  <option value="Singapore">Singapore</option>
+                  <option value="UAE">United Arab Emirates</option>
+                  <option value="Other">Other</option>
+                </select>
+                <span class="form-error" id="err-country">Please select your country.</span>
+              </div>
+              <div class="form-group full">
+                <label for="specialRequests">Special Requests &amp; Notes</label>
+                <textarea class="form-control" id="specialRequests" placeholder="Dietary restrictions, accessibility needs, celebration arrangements, preferred airlines, etc."></textarea>
+              </div>
+            </div>
+
+            <!-- Inline Info -->
+            <div style="background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(6,182,212,0.06));border:1px solid rgba(37,99,235,0.15);border-radius:var(--radius-sm);padding:18px 20px;margin-bottom:28px;font-size:0.88rem;color:var(--text-light)">
+              <strong style="color:var(--text)">🛡 Safe &amp; Secure Booking:</strong>
+              Your personal information is protected with <mark>256-bit SSL encryption</mark>.
+              We are <u>fully licensed</u> by the Philippine Department of Tourism (DOT Accreditation No. <strong>PH-2026-AT-0042</strong>).
+              By submitting this form, you agree to our <a href="#" style="color:var(--primary)">Booking Terms &amp; Conditions</a>.
+              <br/><br/>
+              Prices shown are <em>per person</em> based on twin-share. A non-refundable deposit of <strong>25%</strong> is required to confirm your reservation.
+              <sup>†</sup> Full payment is due 45 days before departure<sub>(or immediately for last-minute bookings)</sub>.
+            </div>
+
+            <div style="display:flex;gap:14px;flex-wrap:wrap">
+              <button type="submit" class="btn btn-primary" style="flex:1;justify-content:center;min-width:200px;font-size:1rem;padding:15px 28px">
+                ✈ Submit Booking Request
+              </button>
+              <button type="button" class="btn btn-outline" onclick="resetForm()">Clear Form</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+      <!-- Booking Summary Sidebar -->
+      <div>
+        <div class="booking-summary fade-in" id="bookingSummary">
+          <h3>📋 Booking Summary</h3>
+          <div class="summary-row">
+            <span>Destination</span>
+            <span id="sum-dest">—</span>
+          </div>
+          <div class="summary-row">
+            <span>Package Type</span>
+            <span id="sum-pkg">—</span>
+          </div>
+          <div class="summary-row">
+            <span>Departure</span>
+            <span id="sum-dep">—</span>
+          </div>
+          <div class="summary-row">
+            <span>Return</span>
+            <span id="sum-ret">—</span>
+          </div>
+          <div class="summary-row">
+            <span>Guests</span>
+            <span id="sum-guests">—</span>
+          </div>
+          <div class="summary-row">
+            <span>Price / Person</span>
+            <span id="sum-price" style="color:var(--primary);font-weight:700">—</span>
+          </div>
+          <div class="summary-row">
+            <span><strong>Estimated Total</strong></span>
+            <span id="sum-total" style="font-size:1.15rem">—</span>
+          </div>
+          <p class="summary-note">* Estimated total. Final price confirmed by consultant within 24 hours. Group discounts may apply for 5+ guests.</p>
+        </div>
+
+        <!-- Why Book With Us -->
+        <div style="margin-top:24px;background:var(--card);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);border:1px solid var(--glass-border)">
+          <h4 style="margin-bottom:16px;font-size:0.95rem;font-weight:800">Why Book With Aurora?</h4>
+          <ul style="list-style:none">
+            <li style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--glass-border);font-size:0.88rem">✅ <span>Best Price Guarantee</span></li>
+            <li style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--glass-border);font-size:0.88rem">✅ <span>Free Cancellation (within 48 hrs)</span></li>
+            <li style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--glass-border);font-size:0.88rem">✅ <span>24/7 Travel Support</span></li>
+            <li style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--glass-border);font-size:0.88rem">✅ <span>Travel Insurance Included</span></li>
+            <li style="display:flex;gap:10px;padding:7px 0;font-size:0.88rem">✅ <span>DOT Licensed Agency</span></li>
+          </ul>
+        </div>
+
+        <!-- Emergency Contact -->
+        <div style="margin-top:24px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:var(--radius);padding:24px;color:#fff">
+          <h4 style="margin-bottom:10px;font-size:0.95rem">Need Help Booking?</h4>
+          <p style="font-size:0.88rem;opacity:0.9;margin-bottom:14px">Our consultants are available Monday–Saturday, 8AM–8PM PHT.</p>
+          <a href="tel:+6328001234" style="color:#fff;font-weight:800;font-size:1.05rem">📞 +63 2 800 1234</a><br/>
+          <a href="mailto:bookings@auroratravels.ph" style="color:rgba(255,255,255,0.85);font-size:0.88rem">✉ bookings@auroratravels.ph</a>
+        </div>
+      </div>
+
+    </div><!-- end booking-layout -->
+
+    <!-- Travel Policies -->
+    <div style="margin-top:72px" class="fade-in">
+      <div class="section-header">
+        <div class="section-tag">📋 Travel Policies</div>
+        <h2 class="section-title">Our <span>Booking Policies</span></h2>
+      </div>
+      <div class="policy-grid">
+        <div class="policy-card">
+          <h4>💳 Payment Policy</h4>
+          <p>A 25% non-refundable deposit secures your booking. The remaining balance is due 45 days before departure. Credit card, bank transfer, and GCash are accepted.</p>
+        </div>
+        <div class="policy-card">
+          <h4>🔄 Cancellation Policy</h4>
+          <p>Free cancellation within 48 hours of booking. 50% refund for cancellations 30–44 days before departure. No refund within 29 days of departure.</p>
+        </div>
+        <div class="policy-card">
+          <h4>🛡 Travel Insurance</h4>
+          <p>Comprehensive travel insurance covering medical emergencies, trip cancellation, lost baggage, and flight delays is included in all packages.</p>
+        </div>
+        <div class="policy-card">
+          <h4>🛂 Visa Assistance</h4>
+          <p>Aurora Travels provides full visa application assistance and documentation support for all destinations. Processing fees may apply depending on the destination.</p>
+        </div>
+        <div class="policy-card">
+          <h4>✈ Flight Changes</h4>
+          <p>Flight rescheduling is subject to airline policies and availability. We recommend booking early to secure preferred flight schedules. Fees may apply.</p>
+        </div>
+        <div class="policy-card">
+          <h4>👥 Group Bookings</h4>
+          <p>Groups of 5 or more guests receive a 10% discount. Groups of 10 or more receive 15% off plus a complimentary group coordinator service.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">✈ Aurora Travels</div>
+        <p>Book with confidence. Every journey is backed by our best price guarantee and 24/7 support.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="https://www.facebook.com" target="_blank">f</a>
+          <a class="social-btn" href="https://www.instagram.com" target="_blank">in</a>
+          <a class="social-btn" href="https://www.twitter.com" target="_blank">𝕏</a>
+          <a class="social-btn" href="https://www.youtube.com" target="_blank">▶</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Quick Links</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="destinations.html">Destinations</a></li>
+        <li><a href="packages.html">Packages</a></li><li><a href="gallery.html">Gallery</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Policies</h4><ul>
+        <li><a href="#">Payment Policy</a></li><li><a href="#">Cancellation Policy</a></li>
+        <li><a href="#">Travel Insurance</a></li><li><a href="#">Visa Assistance</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Contact Us</h4><ul>
+        <li><a href="contact.html">Contact Page</a></li>
+        <li><a href="tel:+6328001234">+63 2 800 1234</a></li>
+        <li><a href="mailto:info@auroratravels.ph">info@auroratravels.ph</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Aurora Travels. All rights reserved.</p>
+      <div class="clock-widget"><div class="clock-time" id="clockTime">00:00:00</div><div class="clock-date" id="clockDate">—</div></div>
+    </div>
+  </div>
+</footer>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+
+<script>
+  // ---- EmailJS Initialization ----
+  (function() {
+    emailjs.init({
+      publicKey: "qh5RptHl-lE9cgn2O",   // Your public key
+    });
+  })();
+
+  // ---- Loading screen ----
+  window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('loading-screen');if(l)l.classList.add('hidden');},2200);});
+
+  // ---- Theme toggle ----
+  var isDark=localStorage.getItem('aurora-theme')==='dark';
+  var themeBtn=document.getElementById('themeToggle');
+  if(isDark){document.body.classList.add('dark');themeBtn.textContent='☀️';}
+  themeBtn.addEventListener('click',function(){document.body.classList.toggle('dark');isDark=document.body.classList.contains('dark');themeBtn.textContent=isDark?'☀️':'🌙';localStorage.setItem('aurora-theme',isDark?'dark':'light');});
+
+  // ---- Hamburger ----
+  document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('mobile-open');});
+
+  // ---- Scroll to top ----
+  window.addEventListener('scroll',function(){var b=document.getElementById('scroll-top');if(b){if(window.scrollY>400)b.classList.add('visible');else b.classList.remove('visible');}});
+
+  // ---- Fade-in ----
+  var fadeEls=document.querySelectorAll('.fade-in');
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
+  fadeEls.forEach(function(el){obs.observe(el);});
+
+  // ---- Clock ----
+  function updateClock(){var n=new Date();var h=String(n.getHours()).padStart(2,'0');var m=String(n.getMinutes()).padStart(2,'0');var s=String(n.getSeconds()).padStart(2,'0');var t=document.getElementById('clockTime');var d=document.getElementById('clockDate');var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];var months=['January','February','March','April','May','June','July','August','September','October','November','December'];if(t)t.textContent=h+':'+m+':'+s;if(d)d.textContent=days[n.getDay()]+', '+months[n.getMonth()]+' '+n.getDate()+', '+n.getFullYear();}
+  updateClock();setInterval(updateClock,1000);
+
+  // ---- Min date ----
+  (function(){
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById('departureDate').min = today;
+    document.getElementById('returnDate').min = today;
+  })();
+
+  // ---- Price map ----
+  var priceMap = {
+    'Japan': 85000, 'South Korea': 72000, 'Singapore': 60000, 'Thailand': 55000,
+    'Philippines': 35000, 'Maldives': 180000, 'Switzerland': 120000, 'France': 130000,
+    'Italy': 125000, 'Dubai (UAE)': 95000, 'Australia': 150000, 'Canada': 155000,
+    'Norway': 165000, 'Iceland': 175000, 'New Zealand': 160000
+  };
+
+  // ---- Summary update ----
+  function updateSummary() {
+    var dest = document.getElementById('destination').value;
+    var pkg  = document.getElementById('packageType').value;
+    var dep  = document.getElementById('departureDate').value;
+    var ret  = document.getElementById('returnDate').value;
+    var g    = document.getElementById('guests').value;
+    document.getElementById('sum-dest').textContent    = dest || '—';
+    document.getElementById('sum-pkg').textContent     = pkg  || '—';
+    document.getElementById('sum-dep').textContent     = dep  || '—';
+    document.getElementById('sum-ret').textContent     = ret  || '—';
+    document.getElementById('sum-guests').textContent  = g    || '—';
+    if (dest && priceMap[dest]) {
+      var perPerson = priceMap[dest];
+      var guestNum  = isNaN(parseInt(g)) ? 1 : Math.min(parseInt(g), 6);
+      var total     = perPerson * guestNum;
+      document.getElementById('sum-price').textContent = '₱' + perPerson.toLocaleString();
+      document.getElementById('sum-total').textContent = '₱' + total.toLocaleString();
+    } else {
+      document.getElementById('sum-price').textContent = '—';
+      document.getElementById('sum-total').textContent = '—';
+    }
+  }
+
+  // ---- Submit Booking with EmailJS (auto-reply to user only) ----
+  function submitBooking(e) {
+    e.preventDefault();
+    var valid = true;
+    var fields = [
+      {id:'destination',    err:'err-destination'},
+      {id:'packageType',    err:'err-packageType'},
+      {id:'departureDate',  err:'err-departureDate'},
+      {id:'guests',         err:'err-guests'},
+      {id:'fullName',       err:'err-fullName'},
+      {id:'useremail',      err:'err-useremail'},
+      {id:'phone',          err:'err-phone'},
+      {id:'country',        err:'err-country'}
+    ];
+    fields.forEach(function(f){
+      var el  = document.getElementById(f.id);
+      var err = document.getElementById(f.err);
+      if (!el.value.trim()) {
+        el.classList.add('error');
+        err.classList.add('show');
+        valid = false;
+      } else {
+        el.classList.remove('error');
+        err.classList.remove('show');
+      }
+    });
+    // Email format check
+    var emailEl = document.getElementById('useremail');
+    if (emailEl.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+      emailEl.classList.add('error');
+      document.getElementById('err-useremail').classList.add('show');
+      valid = false;
+    }
+    if (!valid) {
+      document.querySelector('.form-control.error').scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
+
+    // ---- Prepare parameters for EmailJS ----
+    var templateParams = {
+      fullname: document.getElementById('fullName').value,
+      useremail: document.getElementById('useremail').value,   // <-- Recipient
+      destination: document.getElementById('destination').value,
+      packageType: document.getElementById('packageType').value,
+      departureDate: document.getElementById('departureDate').value,
+      returnDate: document.getElementById('returnDate').value || 'Not specified',
+      guests: document.getElementById('guests').value,
+      roomType: document.getElementById('roomType').value,
+      phone: document.getElementById('phone').value,
+      country: document.getElementById('country').value,
+      specialRequests: document.getElementById('specialRequests').value || 'None'
+    };
+
+    // 🔍 Debug: log the email to check
+    console.log('📧 Sending email to:', templateParams.useremail);
+    console.log('📦 Full params:', templateParams);
+
+    // If email is empty, show alert and stop
+    if (!templateParams.useremail || templateParams.useremail.trim() === '') {
+      alert('Error: Email address is missing. Please fill in your email.');
+      return;
+    }
+
+    // Disable submit button
+    var submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    // Send email using EmailJS – this sends to the user only
+    Promise.all([
+emailjs.send('service_inxk5hy','template_h1a0wjy',templateParams,{publicKey:'qh5RptHl-lE9cgn2O'}),
+emailjs.send('service_71aoj7e','template_yucbekn',templateParams,{publicKey:'00i0cAPjzsMbRfJ_J'})
+]).then(function(response) {
+        console.log('✅ Confirmation email sent to user!', response.status, response.text);
+        // Show confirmation on page
+        document.getElementById('bookingForm').style.display = 'none';
+        var confirm = document.getElementById('booking-confirm');
+        confirm.style.display = 'block';
+        var details = document.getElementById('confirmDetails');
+        details.innerHTML =
+          '<strong>📍 Destination:</strong> ' + document.getElementById('destination').value + '<br/>' +
+          '<strong>🎒 Package:</strong> '     + document.getElementById('packageType').value + '<br/>' +
+          '<strong>📅 Departure:</strong> '   + document.getElementById('departureDate').value + '<br/>' +
+          '<strong>👤 Name:</strong> '        + document.getElementById('fullName').value + '<br/>' +
+          '<strong>✉ Email:</strong> '        + document.getElementById('useremail').value;
+        // Update steps
+        document.getElementById('step1').classList.remove('active');
+        document.getElementById('step1').classList.add('done');
+        document.getElementById('step2').classList.remove('active');
+        document.getElementById('step2').classList.add('done');
+        document.getElementById('step3').classList.add('active','done');
+        window.scrollTo({top:0,behavior:'smooth'});
+        if (submitBtn) submitBtn.disabled = false;
+      })
+      .catch(function(error) {
+        var errMsg = 'EmailJS error:\n';
+        if (error.text) errMsg += error.text;
+        else if (error.message) errMsg += error.message;
+        else errMsg += 'Unknown error – check console (F12) for details.';
+        alert(errMsg);
+        console.error('❌ EmailJS error:', error);
+        if (submitBtn) submitBtn.disabled = false;
+        // Form stays visible – user can retry
+      });
+  }
+
+  // ---- Reset form ----
+  function resetForm() {
+    document.getElementById('bookingForm').reset();
+    document.querySelectorAll('.form-error').forEach(function(e){e.classList.remove('show');});
+    document.querySelectorAll('.form-control').forEach(function(e){e.classList.remove('error');});
+    updateSummary();
+  }
+</script>
+</body>
+</html>
