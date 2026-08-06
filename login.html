@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Log In — Aurora Travels</title>
+<link rel="stylesheet" href="style.css" />
+<style>
+  /* Internal CSS — Login Page (unique decorative touch) */
+  .auth-hero::before {
+    content: ''; position: absolute; width: 340px; height: 340px; border-radius: 50%;
+    background: rgba(255,255,255,0.08); top: -140px; right: -80px;
+  }
+</style>
+</head>
+<body>
+
+<div id="loading-screen">
+  <div class="loader-logo">✈ Aurora Travels</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <p class="loader-text">Loading login page…</p>
+</div>
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">✈ Aurora Travels</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="packages.html">Packages</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="booking.html">Book Now</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeToggle" title="Toggle dark mode">🌙</button>
+      <a href="login.html" class="btn-nav-login">Login</a>
+      <a href="booking.html" class="btn-nav-cta">Book Now</a>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<section class="auth-hero">
+  <div class="container">
+    <div class="breadcrumb" style="color:rgba(255,255,255,0.7)">
+      <a href="index.html" style="color:rgba(255,255,255,0.9)">Home</a>
+      <span>/</span><span style="color:#fff">Login</span>
+    </div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.2rem);font-weight:900;margin:14px 0 12px">
+      Welcome <span style="color:#67E8F9">Back</span>
+    </h1>
+    <p style="opacity:0.85;max-width:560px;font-size:1.05rem">
+      Log in to manage your bookings, track your itinerary, and unlock <strong>exclusive member deals</strong>.
+    </p>
+  </div>
+</section>
+
+<section class="section auth-section">
+  <div class="container">
+    <div class="auth-wrapper">
+
+      <!-- Success panel (hidden until a matching account is found) -->
+      <div id="login-success">
+        <div class="icon">🎉</div>
+        <h3>Login Successful!</h3>
+        <p style="color:var(--text-light);margin-bottom:24px" id="loginSuccessMsg">
+          Welcome back! Redirecting you to the home page…
+        </p>
+        <a href="index.html" class="btn btn-primary">Go to Home Now</a>
+      </div>
+
+      <div class="auth-card fade-in" id="loginCard">
+        <div class="auth-icon">🔐</div>
+        <h2>Log In to Your Account</h2>
+        <p class="auth-subtitle">Enter your details to access your Aurora Travels account.</p>
+
+        <div class="alert alert-warning" id="loginAlert" style="display:none;margin-bottom:20px;font-size:0.85rem"></div>
+
+        <form id="loginForm" onsubmit="submitLogin(event)" novalidate>
+          <div class="form-group" style="margin-bottom:18px">
+            <label for="loginEmail">Email Address *</label>
+            <input type="email" class="form-control" id="loginEmail" name="loginEmail" placeholder="you@example.com" />
+            <span class="form-error" id="err-loginEmail">Please enter a valid email address.</span>
+          </div>
+
+          <div class="form-group" style="margin-bottom:10px">
+            <label for="loginPassword">Password *</label>
+            <div class="input-wrapper">
+              <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="Enter your password" />
+              <button type="button" class="toggle-password" onclick="togglePassword('loginPassword', this)">👁</button>
+            </div>
+            <span class="form-error" id="err-loginPassword">Please enter your password.</span>
+          </div>
+
+          <div class="auth-options-row">
+            <div class="checkbox-row" style="margin:0">
+              <input type="checkbox" id="rememberMe" name="rememberMe" />
+              <label for="rememberMe">Remember me</label>
+            </div>
+            <a href="#" onclick="alert('Please contact our support team at info@auroratravels.ph to reset your password.');return false;">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px">
+            🔓 Log In
+          </button>
+        </form>
+
+        <div class="auth-divider">or</div>
+
+        <p class="auth-switch">Don't have an account? <a href="register.html">Create one now</a></p>
+      </div>
+
+      <div style="margin-top:20px;background:linear-gradient(135deg,rgba(37,99,235,0.06),rgba(6,182,212,0.06));border:1px solid rgba(37,99,235,0.15);border-radius:var(--radius-sm);padding:16px 20px;font-size:0.82rem;color:var(--text-light);text-align:center">
+        🔒 Your information is protected with <mark>256-bit SSL encryption</mark>. We <u>never</u> share your details with third parties.
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">✈ Aurora Travels</div>
+        <p>Your trusted partner for extraordinary luxury travel experiences. Licensed by the Philippine Department of Tourism since 2012.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="https://www.facebook.com" target="_blank">f</a>
+          <a class="social-btn" href="https://www.instagram.com" target="_blank">in</a>
+          <a class="social-btn" href="https://www.twitter.com" target="_blank">𝕏</a>
+          <a class="social-btn" href="https://www.youtube.com" target="_blank">▶</a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Quick Links</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="destinations.html">Destinations</a></li>
+        <li><a href="packages.html">Packages</a></li><li><a href="gallery.html">Gallery</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>My Account</h4><ul>
+        <li><a href="login.html">Login</a></li><li><a href="register.html">Create Account</a></li>
+        <li><a href="booking.html">Book Now</a></li><li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Contact Us</h4><ul>
+        <li><a href="contact.html">Contact Page</a></li>
+        <li><a href="tel:+6328001234">+63 2 800 1234</a></li>
+        <li><a href="mailto:info@auroratravels.ph">info@auroratravels.ph</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Aurora Travels. All rights reserved.</p>
+      <div class="clock-widget"><div class="clock-time" id="clockTime">00:00:00</div><div class="clock-date" id="clockDate">—</div></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('loading-screen');if(l)l.classList.add('hidden');},2200);});
+
+  var isDark=localStorage.getItem('aurora-theme')==='dark';
+  var themeBtn=document.getElementById('themeToggle');
+  if(isDark){document.body.classList.add('dark');themeBtn.textContent='☀️';}
+  themeBtn.addEventListener('click',function(){
+    document.body.classList.toggle('dark');
+    isDark=document.body.classList.contains('dark');
+    themeBtn.textContent=isDark?'☀️':'🌙';
+    localStorage.setItem('aurora-theme',isDark?'dark':'light');
+  });
+
+  document.getElementById('hamburger').addEventListener('click',function(){
+    document.getElementById('navLinks').classList.toggle('mobile-open');
+  });
+
+  window.addEventListener('scroll',function(){
+    var b=document.getElementById('scroll-top');
+    if(b){ if(window.scrollY>400) b.classList.add('visible'); else b.classList.remove('visible'); }
+  });
+
+  var fadeEls=document.querySelectorAll('.fade-in');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  },{threshold:0.1});
+  fadeEls.forEach(function(el){ obs.observe(el); });
+
+  function updateClock(){
+    var n=new Date();
+    var h=String(n.getHours()).padStart(2,'0');
+    var m=String(n.getMinutes()).padStart(2,'0');
+    var s=String(n.getSeconds()).padStart(2,'0');
+    var t=document.getElementById('clockTime');
+    var d=document.getElementById('clockDate');
+    var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    if(t) t.textContent=h+':'+m+':'+s;
+    if(d) d.textContent=days[n.getDay()]+', '+months[n.getMonth()]+' '+n.getDate()+', '+n.getFullYear();
+  }
+  updateClock();
+  setInterval(updateClock,1000);
+
+  function togglePassword(fieldId, btn) {
+    var field = document.getElementById(fieldId);
+    if (field.type === 'password') { field.type = 'text'; btn.textContent = '🙈'; }
+    else { field.type = 'password'; btn.textContent = '👁'; }
+  }
+
+  // Pre-fill remembered email from a previous "Remember me" login
+  (function(){
+    var remembered = localStorage.getItem('auroraRemember');
+    if (remembered) {
+      document.getElementById('loginEmail').value = remembered;
+      document.getElementById('rememberMe').checked = true;
+    }
+  })();
+
+  // This is a static site with no backend/database — login checks the account
+  // created via register.html and stored in this browser's localStorage.
+  function submitLogin(e) {
+    e.preventDefault();
+    var valid = true;
+    var alertBox = document.getElementById('loginAlert');
+    alertBox.style.display = 'none';
+
+    var emailEl = document.getElementById('loginEmail');
+    var passEl  = document.getElementById('loginPassword');
+
+    if (!emailEl.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+      emailEl.classList.add('error');
+      document.getElementById('err-loginEmail').classList.add('show');
+      valid = false;
+    } else {
+      emailEl.classList.remove('error');
+      document.getElementById('err-loginEmail').classList.remove('show');
+    }
+
+    if (!passEl.value) {
+      passEl.classList.add('error');
+      document.getElementById('err-loginPassword').classList.add('show');
+      valid = false;
+    } else {
+      passEl.classList.remove('error');
+      document.getElementById('err-loginPassword').classList.remove('show');
+    }
+
+    if (!valid) {
+      document.querySelector('.form-control.error').scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
+
+    var stored = localStorage.getItem('auroraRegisteredUser');
+    var user = stored ? JSON.parse(stored) : null;
+
+    if (!user || user.email.toLowerCase() !== emailEl.value.trim().toLowerCase()) {
+      alertBox.textContent = '⚠ We could not find an account with that email on this device. Please create an account first.';
+      alertBox.style.display = 'block';
+      alertBox.scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
+
+    if (document.getElementById('rememberMe').checked) {
+      localStorage.setItem('auroraRemember', emailEl.value.trim());
+    } else {
+      localStorage.removeItem('auroraRemember');
+    }
+    localStorage.setItem('auroraLoggedIn', 'true');
+
+    document.getElementById('loginCard').style.display = 'none';
+    document.getElementById('loginSuccessMsg').innerHTML = 'Welcome back, <strong>' + user.fullName + '</strong>! Redirecting you to the home page…';
+    document.getElementById('login-success').classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+    setTimeout(function(){ window.location.href = 'index.html'; }, 2500);
+  }
+</script>
+</body>
+</html>
