@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurora Travels — Luxury Travel Experiences</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Internal CSS — Home Page Specific */
+    .intro-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .intro-section img {
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      height: 440px;
+      object-fit: cover;
+    }
+    .intro-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .intro-section h2 { font-size: 2.2rem; font-weight: 900; margin-bottom: 20px; line-height: 1.2; }
+    .intro-section p  { color: var(--text-light); line-height: 1.8; margin-bottom: 16px; }
+    .feature-list { margin: 24px 0; }
+    .feature-list li {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid var(--glass-border);
+      font-size: 0.95rem;
+    }
+    .feature-list li span.check {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 0.75rem; flex-shrink: 0;
+    }
+    .tips-bg { background: linear-gradient(135deg, rgba(37,99,235,0.04), rgba(6,182,212,0.04)); }
+    @media (max-width: 768px) {
+      .intro-section { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    /* Aurora Travels — Glass Login / Register + Page Transition */
+    .aurora-auth-overlay{
+      position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center;
+      padding:24px; box-sizing:border-box; background:rgba(4,12,30,.72);
+      backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+      opacity:0; visibility:hidden; pointer-events:none; transition:opacity .45s ease,visibility .45s ease;
+    }
+    .aurora-auth-overlay.show{opacity:1;visibility:visible;pointer-events:auto}
+    .aurora-auth-card{
+      width:min(440px,100%); max-height:calc(100vh - 48px); overflow:auto; padding:32px;
+      box-sizing:border-box; border-radius:26px; border:1px solid rgba(255,255,255,.24);
+      background:rgba(255,255,255,.13); box-shadow:0 25px 80px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.16);
+      backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px);color:#fff;
+      transform:translateY(25px) scale(.98);opacity:0;transition:transform .55s cubic-bezier(.22,1,.36,1),opacity .45s ease;
+    }
+    .aurora-auth-overlay.show .aurora-auth-card{transform:translateY(0) scale(1);opacity:1}
+    .aurora-auth-brand{text-align:center;font-size:1.65rem;font-weight:900}
+    .aurora-auth-sub{text-align:center;color:rgba(255,255,255,.68);font-size:.86rem;margin:6px 0 24px}
+    .aurora-auth-view{display:none}.aurora-auth-view.active{display:block}
+    .aurora-auth-view h2{text-align:center;margin:0 0 7px}
+    .auth-help{text-align:center;color:rgba(255,255,255,.62);font-size:.82rem;margin:0 0 20px}
+    .aurora-auth-field{margin-bottom:14px}.aurora-auth-field label{display:block;font-size:.78rem;font-weight:800;margin-bottom:7px}
+    .aurora-auth-input{width:100%;box-sizing:border-box;padding:13px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.2);
+      outline:none;background:rgba(255,255,255,.09);color:#fff;font:inherit}
+    .aurora-auth-input::placeholder{color:rgba(255,255,255,.43)}
+    .aurora-auth-input:focus{border-color:#67E8F9;box-shadow:0 0 0 3px rgba(103,232,249,.12)}
+    .aurora-auth-submit{width:100%;padding:13px 16px;border:0;border-radius:12px;cursor:pointer;color:#fff;font:inherit;font-weight:900;
+      background:linear-gradient(135deg,#2563EB,#06B6D4);box-shadow:0 10px 28px rgba(37,99,235,.28)}
+    .aurora-auth-message{min-height:20px;margin-top:10px;text-align:center;font-size:.8rem;line-height:1.45}
+    .aurora-auth-message.error{color:#fecaca}.aurora-auth-message.success{color:#a7f3d0}
+    .aurora-auth-switch{text-align:center;margin-top:18px;color:rgba(255,255,255,.64);font-size:.82rem}
+    .aurora-auth-switch button{border:0;background:none;color:#67E8F9;font:inherit;font-weight:900;cursor:pointer}
+    .aurora-auth-note{margin-top:18px;padding:10px 12px;border-radius:11px;border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.06);color:rgba(255,255,255,.52);font-size:.68rem;line-height:1.45;text-align:center}
+
+    /* 0.6-second slide transition between Aurora pages */
+    #page-transition{
+      position:fixed;inset:0;z-index:10001;pointer-events:none;visibility:hidden;
+      background:linear-gradient(135deg,#0f172a,#1d4ed8,#06b6d4);
+      transform:translateX(100%);transition:transform .6s cubic-bezier(.77,0,.18,1),visibility 0s .6s;
+    }
+    #page-transition.active{visibility:visible;transform:translateX(0);transition:transform .6s cubic-bezier(.77,0,.18,1)}
+    #page-transition.exit{transform:translateX(-100%);transition:transform .6s cubic-bezier(.77,0,.18,1)}
+    .aurora-account{
+      display:none;
+      align-items:center;
+      gap:8px;
+      margin-left:6px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(103,232,249,.20);
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      font-size:.75rem;
+      font-weight:800;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      box-shadow:0 5px 18px rgba(37,99,235,.10),inset 0 1px rgba(255,255,255,.08);
+    }
+    .aurora-account.visible{display:flex}.aurora-logout{
+      border:1px solid rgba(103,232,249,.22);
+      border-radius:8px;
+      padding:5px 9px;
+      cursor:pointer;
+      background:linear-gradient(135deg,rgba(37,99,235,.20),rgba(6,182,212,.14));
+      color:#67E8F9;
+      font:inherit;
+      font-weight:800;
+      transition:.2s ease;
+      box-shadow:0 4px 14px rgba(37,99,235,.12);
+    }
+    .aurora-logout:hover{
+      background:linear-gradient(135deg,rgba(37,99,235,.35),rgba(6,182,212,.28));
+      border-color:rgba(103,232,249,.45);
+      transform:translateY(-1px);
+      box-shadow:0 6px 18px rgba(37,99,235,.20);
+    }
+    @media(max-width:768px){.aurora-account{display:none!important}.aurora-auth-card{padding:25px 20px}}
+
+
+    .aurora-hero-logout{
+      border:1px solid rgba(103,232,249,.45)!important;
+      background:rgba(15,23,42,.48)!important;
+      color:#67E8F9!important;
+      cursor:pointer;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      box-shadow:0 8px 22px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.12);
+      transition:transform .2s ease,background .2s ease,border-color .2s ease;
+    }
+    .aurora-hero-logout:hover{
+      transform:translateY(-2px);
+      background:rgba(37,99,235,.55)!important;
+      border-color:#67E8F9!important;
+    }
+    @media(max-width:600px){
+      .hero-actions{flex-wrap:wrap}
+      .aurora-hero-logout{min-width:170px}
+    }
+
+  
+    /* Hero Logout — intentionally matches the View Packages button */
+    .btn-logout-hero{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:56px;
+      padding:0 32px;
+      margin-left:10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.35);
+      background:rgba(15,23,42,.72);
+      color:#fff;
+      font:inherit;
+      font-weight:800;
+      cursor:pointer;
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      transition:transform .25s ease,background .25s ease,border-color .25s ease;
+    }
+    .btn-logout-hero:hover{
+      background:rgba(15,23,42,.9);
+      border-color:rgba(255,255,255,.55);
+      transform:translateY(-2px);
+    }
+    @media(max-width:700px){
+      .btn-logout-hero{
+        margin-left:0;
+        margin-top:12px;
+      }
+    }
+
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loading-screen">
+  <div class="loader-logo">✈ Aurora Travels</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <p class="loader-text">Preparing your journey…</p>
+</div>
+
+
+<!-- Aurora Travels Glass Authentication -->
+<div class="aurora-auth-overlay" id="auroraAuth">
+  <div class="aurora-auth-card">
+    <div class="aurora-auth-brand">✈ Aurora Travels</div>
+    <div class="aurora-auth-sub">Your journey starts here.</div>
+
+    <div class="aurora-auth-view active" id="auroraLoginView">
+      <h2>Welcome Back</h2>
+      <p class="auth-help">Log in to continue to Aurora Travels.</p>
+      <form id="auroraLoginForm">
+        <div class="aurora-auth-field">
+          <label for="auroraLoginEmail">Email Address</label>
+          <input class="aurora-auth-input" id="auroraLoginEmail" type="email" required placeholder="you@example.com">
+        </div>
+        <div class="aurora-auth-field">
+          <label for="auroraLoginPassword">Password</label>
+          <input class="aurora-auth-input" id="auroraLoginPassword" type="password" required placeholder="Your password">
+        </div>
+        <button class="aurora-auth-submit" type="submit">🔐 Login</button>
+        <div class="aurora-auth-message" id="auroraLoginMsg"></div>
+      </form>
+      <div class="aurora-auth-switch">New here? <button type="button" onclick="auroraShowAuth('register')">Create an account</button></div>
+    </div>
+
+    <div class="aurora-auth-view" id="auroraRegisterView">
+      <h2>Create Account</h2>
+      <p class="auth-help">Register once, then use your account to log in.</p>
+      <form id="auroraRegisterForm">
+        <div class="aurora-auth-field">
+          <label for="auroraRegisterName">Full Name</label>
+          <input class="aurora-auth-input" id="auroraRegisterName" type="text" required placeholder="Your full name">
+        </div>
+        <div class="aurora-auth-field">
+          <label for="auroraRegisterEmail">Email Address</label>
+          <input class="aurora-auth-input" id="auroraRegisterEmail" type="email" required placeholder="you@example.com">
+        </div>
+        <div class="aurora-auth-field">
+          <label for="auroraRegisterPassword">Password</label>
+          <input class="aurora-auth-input" id="auroraRegisterPassword" type="password" minlength="6" required placeholder="At least 6 characters">
+        </div>
+        <div class="aurora-auth-field">
+          <label for="auroraRegisterConfirm">Confirm Password</label>
+          <input class="aurora-auth-input" id="auroraRegisterConfirm" type="password" minlength="6" required placeholder="Re-enter your password">
+        </div>
+        <button class="aurora-auth-submit" type="submit">✨ Create Account</button>
+        <div class="aurora-auth-message" id="auroraRegisterMsg"></div>
+      </form>
+      <div class="aurora-auth-switch">Already registered? <button type="button" onclick="auroraShowAuth('login')">Login</button></div>
+    </div>
+
+    <div class="aurora-auth-note">Demo only. Accounts are stored locally in your web browser.</div>
+  </div>
+</div>
+<div id="page-transition"></div>
+
+<!-- Scroll to Top -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">▲</button>
+
+<!-- Navigation -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">✈ Aurora Travels</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="active">Home</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="packages.html">Packages</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="booking.html">Book Now</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-theme" id="themeToggle" title="Toggle dark mode">🌙</button>
+      <a href="booking.html" class="btn-nav-cta">Book Now</a>
+
+      <div class="aurora-account" id="auroraAccount">
+        <span>👤</span><span id="auroraAccountName">Guest</span>
+        <button class="aurora-logout" type="button" onclick="auroraLogout()">Logout</button>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg-img" style="background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600&q=80')"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-particles" id="heroParticles"></div>
+  <div class="container hero-content fade-in">
+    <div class="hero-eyebrow">✦ AWARD-WINNING LUXURY TRAVEL</div>
+    <h1 class="hero-title">Discover the<br>World in <span style="color:#67E8F9">Luxury</span></h1>
+    <p class="hero-subtitle">
+      Aurora Travels crafts extraordinary journeys to the world's most breathtaking destinations.
+      From iconic landmarks to hidden gems — your perfect adventure awaits.
+    </p>
+    <div class="hero-actions">
+      <a href="destinations.html" class="btn btn-white">🌍 Explore Destinations</a>
+      <button type="button" class="btn aurora-hero-logout" onclick="auroraLogout()">Logout</button>
+      <a href="packages.html" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,0.4)">View Packages</a>
+    </div>
+    <!-- Hero Search -->
+    <div class="hero-search">
+      <input type="text" id="heroSearchInput" placeholder="🔍  Where do you want to go?" />
+      <select id="heroMonthSelect">
+        <option value="">📅 Any Month</option>
+        <option>January</option><option>February</option><option>March</option>
+        <option>April</option><option>May</option><option>June</option>
+        <option>July</option><option>August</option><option>September</option>
+        <option>October</option><option>November</option><option>December</option>
+      </select>
+      <select id="heroGuestsSelect">
+        <option value="">👥 Guests</option>
+        <option>1 Guest</option><option>2 Guests</option><option>3–4 Guests</option>
+        <option>5+ Guests</option>
+      </select>
+      <button class="btn btn-primary btn-sm" onclick="heroSearch()">Search</button>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="section-sm" style="background:var(--bg)">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card fade-in">
+        <div class="stat-icon">✈</div>
+        <div class="stat-num" data-target="15000">0</div>
+        <div class="stat-label">Happy Travelers</div>
+      </div>
+      <div class="stat-card fade-in">
+        <div class="stat-icon">🌍</div>
+        <div class="stat-num" data-target="85">0</div>
+        <div class="stat-label">Destinations</div>
+      </div>
+      <div class="stat-card fade-in">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-num" data-target="12">0</div>
+        <div class="stat-label">Years of Excellence</div>
+      </div>
+      <div class="stat-card fade-in">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-num" data-target="48">0</div>
+        <div class="stat-label">Industry Awards</div>
+      </div>
+      <div class="stat-card fade-in">
+        <div class="stat-icon">💯</div>
+        <div class="stat-num" data-target="98">0</div>
+        <div class="stat-label">% Satisfaction Rate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Destinations -->
+<section class="section" id="featured-destinations">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">✈ Top Destinations</div>
+      <h2 class="section-title">Explore <span>Featured Destinations</span></h2>
+      <p class="section-subtitle">Hand-picked destinations offering unforgettable experiences across every continent</p>
+    </div>
+    <div class="destinations-grid" id="featuredGrid">
+      <!-- Japan -->
+      <div class="dest-card fade-in">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1492571350019-22de08371fd3?w=600&q=80" alt="Japan — Torii Gates" loading="lazy" />
+          <div class="dest-badge">Best Seller</div>
+          <div class="dest-rating">★ 4.9</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">Asia • Japan</div>
+          <h3 class="dest-name">Land of the Rising Sun</h3>
+          <p class="dest-desc">Experience ancient temples, neon-lit cities, and breathtaking cherry blossoms in one of the world's most captivating countries.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>7–14 days</strong></span>
+            <span>📅 <strong>Mar–May</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱85,000</strong> <small>/ person</small></div>
+          <a href="booking.html" class="btn btn-primary" style="width:100%;justify-content:center">Book Now →</a>
+        </div>
+      </div>
+      <!-- Maldives -->
+      <div class="dest-card fade-in">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" alt="Maldives — overwater bungalows" loading="lazy" />
+          <div class="dest-badge">Luxury Pick</div>
+          <div class="dest-rating">★ 5.0</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">Indian Ocean • Maldives</div>
+          <h3 class="dest-name">Crystal Waters Paradise</h3>
+          <p class="dest-desc">Overwater villas, turquoise lagoons, and pristine white-sand beaches make the Maldives the ultimate luxury escape.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>5–10 days</strong></span>
+            <span>📅 <strong>Nov–Apr</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱180,000</strong> <small>/ person</small></div>
+          <a href="booking.html" class="btn btn-primary" style="width:100%;justify-content:center">Book Now →</a>
+        </div>
+      </div>
+      <!-- Switzerland -->
+      <div class="dest-card fade-in">
+        <div class="dest-img-wrap">
+          <img src="https://images.unsplash.com/photo-1527668752968-14dc70a27c95?w=600&q=80" alt="Switzerland — Alps" loading="lazy" />
+          <div class="dest-badge">Trending</div>
+          <div class="dest-rating">★ 4.8</div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-country">Europe • Switzerland</div>
+          <h3 class="dest-name">Alpine Wonderland</h3>
+          <p class="dest-desc">Majestic snow-capped peaks, charming medieval villages, and world-class skiing await in the heart of Europe.</p>
+          <div class="dest-meta">
+            <span>⏱ <strong>7–12 days</strong></span>
+            <span>📅 <strong>Dec–Mar</strong></span>
+          </div>
+          <div class="dest-price">From <strong>₱120,000</strong> <small>/ person</small></div>
+          <a href="booking.html" class="btn btn-primary" style="width:100%;justify-content:center">Book Now →</a>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="destinations.html" class="btn btn-outline">View All 15 Destinations →</a>
+    </div>
+  </div>
+</section>
+
+<!-- About / Intro Section -->
+<section class="section" style="background:var(--bg)">
+  <div class="container">
+    <div class="intro-section">
+      <div class="fade-in">
+        <a href="gallery.html">
+          <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80" alt="Clickable travel photo — Aurora Travels team exploring" style="cursor:pointer" title="Visit our Gallery" />
+        </a>
+      </div>
+      <div class="fade-in">
+        <div class="intro-label">About Aurora Travels</div>
+        <h2>Where Every Journey Becomes a <span style="color:var(--primary)">Masterpiece</span></h2>
+        <p>
+          Founded in 2012, <strong>Aurora Travels</strong> has been redefining luxury travel for over a decade.
+          We believe that traveling is not merely moving from one place to another — it is about <em>immersing yourself
+          in culture</em>, discovering hidden wonders, and creating memories that last a lifetime.
+        </p>
+        <p>
+          Our team of <mark>expert travel consultants</mark> curates every detail of your journey with meticulous
+          care, from choosing the finest accommodations to crafting personalized itineraries that match your unique
+          preferences and dreams.
+        </p>
+        <ul class="feature-list">
+          <li><span class="check">✓</span> <span>24/7 Dedicated Travel Support Team</span></li>
+          <li><span class="check">✓</span> <span>Handpicked 5-Star Hotels &amp; Resorts</span></li>
+          <li><span class="check">✓</span> <span>Fully Customizable Itineraries</span></li>
+          <li><span class="check">✓</span> <span>Best Price Guarantee on All Packages</span></li>
+          <li><span class="check">✓</span> <span>Award-Winning Customer Service</span></li>
+        </ul>
+        <a href="about.html" class="btn btn-primary">Learn Our Story →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Popular Packages -->
+<section class="section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">🎒 Travel Packages</div>
+      <h2 class="section-title">Our Most Popular <span>Packages</span></h2>
+      <p class="section-subtitle">Carefully designed travel bundles for every type of adventurer</p>
+    </div>
+    <div class="packages-grid">
+      <div class="pkg-card fade-in">
+        <img src="https://images.unsplash.com/photo-1529260830199-42c24126f198?w=600&q=80" alt="Italy Romance Package" class="pkg-img" />
+        <div class="pkg-body">
+          <div class="pkg-type">🌹 Romance</div>
+          <h3 class="pkg-name">Italian Romance Escape</h3>
+          <p class="pkg-desc">Rome, Florence, and Venice — an unforgettable 10-day honeymoon journey through Italy's most romantic cities.</p>
+          <ul class="pkg-features">
+            <li>Return flights included</li>
+            <li>5-star hotel accommodation</li>
+            <li>Private guided city tours</li>
+            <li>Gondola ride in Venice</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱145,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+      <div class="pkg-card featured fade-in">
+        <div class="pkg-badge-feat">⭐ Most Popular</div>
+        <img src="https://images.unsplash.com/photo-1565967511849-76a60a516170?w=600&q=80" alt="Asia Explorer Package" class="pkg-img" />
+        <div class="pkg-body">
+          <div class="pkg-type">🌏 Adventure</div>
+          <h3 class="pkg-name">Asian Explorer Grand Tour</h3>
+          <p class="pkg-desc">Explore Japan, South Korea, Singapore, and Thailand in one epic 21-day multi-country adventure package.</p>
+          <ul class="pkg-features">
+            <li>All flights and transfers</li>
+            <li>4-star hotels across 4 countries</li>
+            <li>Cultural immersion activities</li>
+            <li>Professional tour guides</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱220,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+      <div class="pkg-card fade-in">
+        <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&q=80" alt="Australia Family Package" class="pkg-img" />
+        <div class="pkg-body">
+          <div class="pkg-type">👨‍👩‍👧 Family</div>
+          <h3 class="pkg-name">Australia Family Adventure</h3>
+          <p class="pkg-desc">Sydney, the Great Barrier Reef, and Uluru — a 14-day family-friendly journey through Australia's iconic wonders.</p>
+          <ul class="pkg-features">
+            <li>Kid-friendly accommodations</li>
+            <li>Great Barrier Reef snorkeling</li>
+            <li>Wildlife sanctuary visits</li>
+            <li>Family photo packages</li>
+          </ul>
+          <div class="pkg-footer">
+            <div class="pkg-price">₱185,000 <small>/ person</small></div>
+            <a href="booking.html" class="btn btn-primary btn-sm">Book →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a href="packages.html" class="btn btn-outline">Browse All Packages →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Travel Tips -->
+<section class="section tips-bg">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">💡 Travel Smart</div>
+      <h2 class="section-title">Essential <span>Travel Tips</span></h2>
+      <p class="section-subtitle">Make the most of your journey with our expert travel advice</p>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card fade-in">
+        <div class="tip-icon">🛂</div>
+        <h3>Book Visas Early</h3>
+        <p>Always apply for your travel visa at least <strong>6–8 weeks</strong> before departure to avoid unnecessary delays and stress.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">🔒</div>
+        <h3>Get Travel Insurance</h3>
+        <p>Protect your investment with comprehensive travel insurance that covers medical emergencies, trip cancellations, and lost luggage.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">💱</div>
+        <h3>Manage Your Currency</h3>
+        <p>Exchange currency at official banks or use a <em>travel-friendly debit card</em> with zero foreign transaction fees to save money.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">📱</div>
+        <h3>Download Offline Maps</h3>
+        <p>Always download offline maps for your destination. Data roaming can be expensive, and connectivity isn't guaranteed everywhere.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">🧳</div>
+        <h3>Pack Light &amp; Smart</h3>
+        <p>Follow the <mark>one-bag rule</mark>: pack only what fits in a carry-on. You'll move faster, save on baggage fees, and travel stress-free.</p>
+      </div>
+      <div class="tip-card fade-in">
+        <div class="tip-icon">🌐</div>
+        <h3>Learn Local Phrases</h3>
+        <p>Learning a few basic phrases in the local language — <em>hello, thank you, excuse me</em> — opens hearts and creates authentic connections.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section" style="background:var(--bg)">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">💬 Testimonials</div>
+      <h2 class="section-title">What Our <span>Travelers Say</span></h2>
+      <p class="section-subtitle">Over 15,000 happy travelers trust Aurora Travels for their dream vacations</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-in">
+        <div class="test-quote">"</div>
+        <p class="test-text">Aurora Travels made our Maldives honeymoon absolutely perfect. Every detail was taken care of — from the overwater villa to the candlelit beach dinner. Truly a five-star experience from start to finish.</p>
+        <div class="test-author">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Maria Santos" class="test-avatar" />
+          <div>
+            <div class="test-name">Maria Santos</div>
+            <div class="test-loc">Manila, Philippines</div>
+            <div class="test-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in">
+        <div class="test-quote">"</div>
+        <p class="test-text">The Japan tour exceeded every expectation. Cherry blossoms in Kyoto, street food in Osaka, and the serenity of Mount Fuji — Aurora curated the most <strong>extraordinary 10 days</strong> of my life.</p>
+        <div class="test-author">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Carlos Reyes" class="test-avatar" />
+          <div>
+            <div class="test-name">Carlos Reyes</div>
+            <div class="test-loc">Cebu City, Philippines</div>
+            <div class="test-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-in">
+        <div class="test-quote">"</div>
+        <p class="test-text">Our family trip to Australia was seamless thanks to the Aurora team. Kids loved the wildlife sanctuaries and the Great Barrier Reef snorkeling. Will definitely book again for our Europe trip!</p>
+        <div class="test-author">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Ana Garcia" class="test-avatar" />
+          <div>
+            <div class="test-name">Ana Garcia</div>
+            <div class="test-loc">Quezon City, Philippines</div>
+            <div class="test-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Unordered List: Why Choose Us -->
+<section class="section-sm" style="background:linear-gradient(135deg,rgba(37,99,235,0.03),rgba(6,182,212,0.03))">
+  <div class="container">
+    <div style="max-width:700px;margin:auto;text-align:center" class="fade-in">
+      <div class="section-tag">🌟 Why Us</div>
+      <h2 class="section-title" style="font-size:1.8rem">Why Travelers Choose Aurora</h2>
+      <p style="color:var(--text-light);margin-bottom:28px">Here is a summary of reasons our clients keep coming back year after year:</p>
+      <ul style="list-style:none;text-align:left;background:var(--card);border-radius:var(--radius);padding:28px 32px;box-shadow:var(--shadow);border:1px solid var(--glass-border)">
+        <li style="padding:8px 0;border-bottom:1px solid var(--glass-border);display:flex;gap:10px;align-items:center">✈ <span><strong>Tailor-Made Itineraries</strong> — every trip is built around your personal preferences and travel style</span></li>
+        <li style="padding:8px 0;border-bottom:1px solid var(--glass-border);display:flex;gap:10px;align-items:center">🏨 <span><strong>Premium Accommodations</strong> — we only partner with verified 4-star and 5-star hotels worldwide</span></li>
+        <li style="padding:8px 0;border-bottom:1px solid var(--glass-border);display:flex;gap:10px;align-items:center">📞 <span><strong>Round-the-Clock Support</strong> — our support team is available <em>24 hours a day, 7 days a week</em></span></li>
+        <li style="padding:8px 0;border-bottom:1px solid var(--glass-border);display:flex;gap:10px;align-items:center">💰 <span><strong>Transparent Pricing</strong> — no hidden fees; what you see is exactly what you pay</span></li>
+        <li style="padding:8px 0;display:flex;gap:10px;align-items:center">🛡 <span><strong>Fully Licensed &amp; Bonded</strong> — certified by the <u>Department of Tourism</u> and internationally accredited</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter-section">
+  <div class="container fade-in">
+    <div class="section-tag" style="background:rgba(255,255,255,0.15);color:#fff">📧 Newsletter</div>
+    <h2 style="font-size:2.2rem;font-weight:900;margin-top:12px;margin-bottom:10px">Get Exclusive Travel Deals</h2>
+    <p style="opacity:0.85;max-width:480px;margin:auto">Subscribe and be the first to receive flash deals, destination guides, and travel inspiration directly to your inbox.</p>
+    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+      <input type="email" id="nlEmail" placeholder="Enter your email address" required />
+      <button type="submit" class="btn btn-white btn-sm">Subscribe</button>
+    </form>
+    <p id="nlMsg" style="margin-top:14px;font-size:0.85rem;opacity:0;transition:opacity 0.4s"></p>
+  </div>
+</section>
+
+<!-- Audio Player -->
+<section class="section-sm" style="background:var(--bg)">
+  <div class="container" style="text-align:center">
+    <div class="section-tag">🎵 Ambient Travel Music</div>
+    <h2 class="section-title" style="font-size:1.6rem;margin-top:12px">Set the Mood for Your Next Adventure</h2>
+    <p style="color:var(--text-light);margin-bottom:28px">Close your eyes and let the music take you there. Play our curated ambient travel soundtrack:</p>
+    <audio controls style="width:100%;max-width:520px;border-radius:var(--radius-sm)">
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <p style="font-size:0.78rem;color:var(--text-light);margin-top:10px">
+      <sup>♪</sup> "Journey to the Horizon" — Aurora Travels Ambient Collection<sub>(Vol. I)</sub>
+    </p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">✈ Aurora Travels</div>
+        <p>Your trusted partner for luxury travel experiences since 2012. We craft extraordinary journeys to the world's most breathtaking destinations.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="https://www.facebook.com" target="_blank" title="Facebook">f</a>
+          <a class="social-btn" href="https://www.instagram.com" target="_blank" title="Instagram">in</a>
+          <a class="social-btn" href="https://www.twitter.com" target="_blank" title="Twitter / X">𝕏</a>
+          <a class="social-btn" href="https://www.youtube.com" target="_blank" title="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Destinations</h4>
+        <ul>
+          <li><a href="destinations.html">Japan</a></li>
+          <li><a href="destinations.html">Maldives</a></li>
+          <li><a href="destinations.html">Switzerland</a></li>
+          <li><a href="destinations.html">France</a></li>
+          <li><a href="destinations.html">Norway</a></li>
+          <li><a href="destinations.html">All Destinations</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="booking.html">Book Now</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">FAQs</a></li>
+          <li><a href="booking.html">Booking Policy</a></li>
+          <li><a href="contact.html">Customer Service</a></li>
+          <li><a href="about.html">Privacy Policy</a></li>
+          <li><a href="about.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Aurora Travels. All rights reserved. | <a href="contact.html" style="color:var(--accent)">Privacy Policy</a></p>
+      <div class="clock-widget">
+        <div class="clock-time" id="clockTime">00:00:00</div>
+        <div class="clock-date" id="clockDate">Loading...</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ============================================================
+  // AURORA TRAVELS — Internal JavaScript (index.html)
+  // ============================================================
+
+
+  // --- Aurora Glass Authentication ---
+  (function () {
+    var USERS='auroraUsers', SESSION='auroraCurrentUser';
+
+    function getUsers(){try{return JSON.parse(localStorage.getItem(USERS)||'[]')}catch(e){return[]}}
+    function msg(id,text,type){var e=document.getElementById(id);if(!e)return;e.textContent=text||'';e.className='aurora-auth-message'+(type?' '+type:'')}
+    function getSession(){try{return JSON.parse(localStorage.getItem(SESSION)||'null')}catch(e){return null}}
+
+    window.auroraShowAuth=function(view){
+      document.getElementById('auroraLoginView').classList.toggle('active',view==='login');
+      document.getElementById('auroraRegisterView').classList.toggle('active',view==='register');
+      msg('auroraLoginMsg','','');msg('auroraRegisterMsg','','');
+    };
+
+    function showAuth(view){
+      document.getElementById('auroraAuth').classList.add('show');
+      document.body.style.overflow='hidden';
+      window.auroraShowAuth(view||'login');
+    }
+    function hideAuth(){
+      document.getElementById('auroraAuth').classList.remove('show');
+      document.body.style.overflow='';
+    }
+    function updateAccount(u){
+      var c=document.getElementById('auroraAccount'),n=document.getElementById('auroraAccountName');
+      if(!c||!n)return;
+      if(u){n.textContent=u.name;c.classList.add('visible')}else c.classList.remove('visible');
+    }
+    window.auroraLogout=function(){localStorage.removeItem(SESSION);updateAccount(null);showAuth('login');msg('auroraLoginMsg','You have been logged out.','success')};
+
+    document.getElementById('auroraRegisterForm').addEventListener('submit',function(e){
+      e.preventDefault();
+      var name=document.getElementById('auroraRegisterName').value.trim();
+      var email=document.getElementById('auroraRegisterEmail').value.trim().toLowerCase();
+      var pass=document.getElementById('auroraRegisterPassword').value;
+      var confirm=document.getElementById('auroraRegisterConfirm').value;
+      var list=getUsers();
+      if(name.length<2)return msg('auroraRegisterMsg','Please enter your full name.','error');
+      if(pass.length<6)return msg('auroraRegisterMsg','Password must be at least 6 characters.','error');
+      if(pass!==confirm)return msg('auroraRegisterMsg','Passwords do not match.','error');
+      if(list.some(function(u){return u.email===email})){
+        msg('auroraRegisterMsg','That email is already registered.','error');return;
+      }
+      list.push({id:'aurora_'+Date.now(),name:name,email:email,password:pass});
+      localStorage.setItem(USERS,JSON.stringify(list));
+      document.getElementById('auroraRegisterForm').reset();
+      window.auroraShowAuth('login');
+      document.getElementById('auroraLoginEmail').value=email;
+      msg('auroraLoginMsg','✓ Account created! Please log in.','success');
+    });
+
+    document.getElementById('auroraLoginForm').addEventListener('submit',function(e){
+      e.preventDefault();
+      var email=document.getElementById('auroraLoginEmail').value.trim().toLowerCase();
+      var pass=document.getElementById('auroraLoginPassword').value;
+      var u=getUsers().find(function(x){return x.email===email});
+      if(!u)return msg('auroraLoginMsg','No account found. Please register first.','error');
+      if(u.password!==pass)return msg('auroraLoginMsg','Incorrect password.','error');
+      localStorage.setItem(SESSION,JSON.stringify({id:u.id,name:u.name,email:u.email}));
+      updateAccount(u);msg('auroraLoginMsg','✓ Login successful!','success');
+      setTimeout(hideAuth,500);
+    });
+
+    // Every time the homepage document is opened as a new page,
+    // require the user to log in again. The registered accounts remain saved.
+    // We intentionally do NOT restore auroraCurrentUser on page startup.
+    localStorage.removeItem(SESSION);
+    updateAccount(null);
+
+    // Wait for the original Aurora loading animation to finish,
+    // then show the glass login screen.
+    window.addEventListener('load',function(){
+      setTimeout(function(){showAuth('login')},2350);
+    });
+  })();
+
+  // --- 0.6s slide transition for internal HTML navigation ---
+  (function(){
+    var transition=document.getElementById('page-transition');
+    if(!transition)return;
+    document.querySelectorAll('a[href]').forEach(function(link){
+      var href=link.getAttribute('href');
+      if(!href||href.charAt(0)==='#'||href.indexOf('javascript:')===0||link.target==='_blank')return;
+      link.addEventListener('click',function(e){
+        var url=link.href;
+        if(!url||url.indexOf(window.location.origin)!==0)return;
+        e.preventDefault();
+        transition.classList.remove('exit');
+        transition.classList.add('active');
+        setTimeout(function(){window.location.href=url},600);
+      });
+    });
+  })();
+
+
+  // Keep the hero Logout button visible only for a logged-in session.
+  (function(){
+    var originalUpdate = window.auroraLogout;
+    var heroBtn = document.querySelector('.btn-logout-hero');
+    if(heroBtn){
+      var session = null;
+      try { session = JSON.parse(localStorage.getItem('auroraCurrentUser') || 'null'); } catch(e) {}
+      heroBtn.style.display = session ? 'inline-flex' : 'none';
+
+      // Re-check after the login UI has finished initializing.
+      setTimeout(function(){
+        try { session = JSON.parse(localStorage.getItem('auroraCurrentUser') || 'null'); } catch(e) { session=null; }
+        heroBtn.style.display = session ? 'inline-flex' : 'none';
+      }, 100);
+
+      var oldLogout = window.auroraLogout;
+      window.auroraLogout = function(){
+        if(oldLogout) oldLogout();
+        heroBtn.style.display='none';
+      };
+    }
+  })();
+
+  // --- Loading Screen ---
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      var ls = document.getElementById('loading-screen');
+      if (ls) ls.classList.add('hidden');
+    }, 2200);
+  });
+
+  // --- Dark / Light Mode ---
+  var themeBtn = document.getElementById('themeToggle');
+  var isDark = localStorage.getItem('aurora-theme') === 'dark';
+  if (isDark) {
+    document.body.classList.add('dark');
+    themeBtn.textContent = '☀️';
+  }
+  themeBtn.addEventListener('click', function () {
+    document.body.classList.toggle('dark');
+    isDark = document.body.classList.contains('dark');
+    themeBtn.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('aurora-theme', isDark ? 'dark' : 'light');
+  });
+
+  // --- Hamburger Menu ---
+  document.getElementById('hamburger').addEventListener('click', function () {
+    document.getElementById('navLinks').classList.toggle('mobile-open');
+  });
+
+  // --- Digital Clock & Current Date ---
+  function updateClock() {
+    var now = new Date();
+    var h = String(now.getHours()).padStart(2, '0');
+    var m = String(now.getMinutes()).padStart(2, '0');
+    var s = String(now.getSeconds()).padStart(2, '0');
+    var timeEl = document.getElementById('clockTime');
+    var dateEl = document.getElementById('clockDate');
+    if (timeEl) timeEl.textContent = h + ':' + m + ':' + s;
+    var days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    if (dateEl) dateEl.textContent = days[now.getDay()] + ', ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // --- Scroll-to-Top Button ---
+  var scrollBtn = document.getElementById('scroll-top');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 400) {
+      scrollBtn.classList.add('visible');
+    } else {
+      scrollBtn.classList.remove('visible');
+    }
+  });
+
+  // --- Fade-In on Scroll (Intersection Observer) ---
+  var fadeEls = document.querySelectorAll('.fade-in');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(function (el) { observer.observe(el); });
+
+  // --- Animated Counters ---
+  var counters = document.querySelectorAll('.stat-num');
+  var counterObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(function (c) { counterObserver.observe(c); });
+
+  function animateCounter(el) {
+    var target = parseInt(el.getAttribute('data-target'), 10);
+    var duration = 2000;
+    var start = 0;
+    var step = target / (duration / 16);
+    var timer = setInterval(function () {
+      start += step;
+      if (start >= target) {
+        el.textContent = target.toLocaleString();
+        clearInterval(timer);
+      } else {
+        el.textContent = Math.floor(start).toLocaleString();
+      }
+    }, 16);
+  }
+
+  // --- Hero Search ---
+  function heroSearch() {
+    var q = document.getElementById('heroSearchInput').value.trim();
+    if (q) {
+      window.location.href = 'destinations.html?search=' + encodeURIComponent(q);
+    } else {
+      window.location.href = 'destinations.html';
+    }
+  }
+  document.getElementById('heroSearchInput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') heroSearch();
+  });
+
+  // --- Newsletter Subscribe ---
+  function subscribeNewsletter(e) {
+    e.preventDefault();
+    var email = document.getElementById('nlEmail').value;
+    var msg = document.getElementById('nlMsg');
+    msg.textContent = '🎉 Thank you! Exclusive deals are on their way to ' + email;
+    msg.style.opacity = '1';
+    document.getElementById('nlEmail').value = '';
+    setTimeout(function () { msg.style.opacity = '0'; }, 5000);
+  }
+
+  // --- Hero Particles ---
+  (function createParticles() {
+    var container = document.getElementById('heroParticles');
+    if (!container) return;
+    var sizes = [6, 10, 14, 18, 8, 12];
+    var lefts = [5,15,25,35,45,55,65,75,85,92];
+    for (var i = 0; i < 10; i++) {
+      var p = document.createElement('div');
+      p.className = 'particle';
+      var sz = sizes[i % sizes.length];
+      p.style.cssText = 'width:' + sz + 'px;height:' + sz + 'px;left:' + lefts[i] + '%;animation-duration:' + (8 + i * 2) + 's;animation-delay:' + (i * 1.5) + 's';
+      container.appendChild(p);
+    }
+  })();
+
+  // --- Active Nav Highlighting ---
+  var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+</script>
+</body>
+</html>
