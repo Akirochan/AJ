@@ -1,40 +1,39 @@
-# ✈️ Aurora Travels
+#  Aurora Travels
 
-A modern, responsive travel booking website built using **HTML**, **CSS**, and **JavaScript**. Aurora Travels provides a professional user experience for exploring destinations, booking vacations, and contacting travel support.
-
----
-
-## 🌍 Features
-
-- 🏠 Modern Homepage
-- ✈️ Online Booking System
-- 🌏 International Destinations
-- 🎁 Travel Packages
-- 🖼️ Interactive Gallery
-- 📖 About Us Page
-- 📞 Contact & Support Page
-- 📧 EmailJS Integration
-- 🌙 Light/Dark Theme
-- 📱 Fully Responsive Design
-- 🎨 Modern Glassmorphism UI
-- ⚡ Smooth Animations
-- 🔒 Booking Form Validation
-- 📋 Live Booking Summary
-- 🕒 Live Clock Widget
-- ⬆️ Scroll-to-Top Button
+A modern, responsive travel booking website built using **HTML**, **CSS**. Aurora Travels provides a professional user experience for exploring destinations, booking vacations, and contacting travel support.
 
 ---
 
-## 🛠️ Built With
+##  Features
+
+-  Modern Homepage
+-  Online Booking System
+-  International Destinations
+-  Travel Packages
+-  Interactive Gallery
+-  About Us Page
+-  Contact & Support Page
+-  EmailJS Integration
+-  Light/Dark Theme
+-  Fully Responsive Design
+-  Modern Glassmorphism UI
+-  Smooth Animations
+-  Booking Form Validation
+-  Live Booking Summary
+-  Live Clock Widget
+-  Scroll-to-Top Button
+
+---
+
+##  Built With
 
 - HTML5
 - CSS3
-- JavaScript (Internal)
 - EmailJS
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 Aurora-Travels/
@@ -53,7 +52,7 @@ Aurora-Travels/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 1. Download or clone this repository.
 2. Open `index.html` in your browser.
@@ -62,20 +61,19 @@ Aurora-Travels/
 
 ---
 
-## 📧 Booking & Contact
+##  Booking & Contact
 
 The website uses **EmailJS** to send booking requests and customer support messages directly without requiring a backend server.
 
 ---
 
-## 🎯 Project Purpose
+##  Project Purpose
 
 Aurora Travels was created as an **ICT Final Project** to demonstrate modern web development using only:
 
 - HTML
 - External CSS
 - Internal CSS
-- Internal JavaScript
 
 No frameworks or backend technologies were used.
 
@@ -94,7 +92,7 @@ Tested on:
 
 ---
 
-## 👨‍💻 Developer
+##  Dev
 
 Developed by **Adsmer Baldera**
 
@@ -102,7 +100,7 @@ ICT Final Project • 2026
 
 ---
 
-## 📄 License
+##  License
 
 This project is for educational purposes only.
 
