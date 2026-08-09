@@ -79,7 +79,7 @@ No frameworks or backend technologies were used.
 
 ---
 
-## 📱 Compatibility
+##  Compatibility
 
 Tested on:
 
