@@ -1,4 +1,4 @@
-
+/* Rgba */
 :root {
   --primary:     #2563EB;
   --secondary:   #0EA5E9;
@@ -240,7 +240,7 @@ nav.navbar {
 .pkg-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 18px; border-top: 1px solid var(--glass-border); }
 .pkg-price { font-size: 1.5rem; font-weight: 900; color: var(--primary); }
 .pkg-price small { font-size: 0.75rem; font-weight: 400; color: var(--text-light); display: block; }
-
+/* photo */
 .hero {
   min-height: 100vh; position: relative;
   display: flex; align-items: center;
